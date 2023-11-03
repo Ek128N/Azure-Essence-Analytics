@@ -1,0 +1,36 @@
+{
+  "manifestVersion": 1,
+  "version": "1.0.1",
+  "id": "azure-essence-analitycs",
+  "name": "Azure Essence Analitycs",
+  "description": "",
+  "publisher": "EmileKirichenko",
+  "demands": ["api-version/3.0"],
+  "categories": ["Azure Boards"],
+  "public": false,
+  "baseUri": "https://localhost:3000",
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "files": [
+    {
+      "path": "dist",
+      "addressable": true
+    }
+  ],
+  "contributions": [
+    {
+      "id": "essence-hub",
+      "type": "ms.vss-web.hub",
+      "targets": [
+        "ms.vss-work-web.work-hub-group"
+      ],
+      "properties": {
+        "name": "Essence",
+        "uri": "dist/essence-hub/essence-hub.html"
+      }
+    }
+  ]
+}

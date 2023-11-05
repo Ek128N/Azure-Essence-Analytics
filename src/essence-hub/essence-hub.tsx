@@ -14,7 +14,7 @@ class Hub extends React.Component {
   public render(): JSX.Element {
     return (
       <Page className="flex-grow">
-        <h1>Hello World</h1>
+        <h1>Goodbye World</h1>
       </Page>
     );
   }

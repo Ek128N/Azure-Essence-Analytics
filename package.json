@@ -10,7 +10,7 @@
     "clean": "rimraf ./dist ./out",
     "compile": "npm run clean && webpack --mode production",
     "compile:dev": "npm run clean && webpack --mode development",
-    "package:dev": "npm run compile:dev && tfx extension create",
+    "package:dev": "npm run compile:dev && tfx extension create --rev-version --output-path vsixPackaged",
     "start:dev": "webpack-dev-server --mode development"
   },
   "dependencies": {

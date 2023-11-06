@@ -4,8 +4,14 @@ typings/
 dist/
 out/
 .idea/
+
+#Ignore Vsix
 *.vsix
+vsixPackaged/
+
+#ignore eslint
 .eslintrc.js
+
 # JUNIT testresult
 test-results.xml
 

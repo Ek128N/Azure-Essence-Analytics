@@ -5,19 +5,21 @@ import * as SDK from "azure-devops-extension-sdk";
 import { Page } from "azure-devops-ui/Page";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import JsonInput from "./JsonInput/JsonInput";
 
 class Hub extends React.Component {
   public componentDidMount() {
     SDK.init();
   }
 
-  public render(): JSX.Element {
+  public render(): React.ReactElement|null {
     return (
       <Page className="flex-grow">
-        <h1>Goodbye World</h1>
+        <JsonInput/>
       </Page>
     );
   }
 }
 
 ReactDOM.render(<Hub />, document.getElementById("root"));
+

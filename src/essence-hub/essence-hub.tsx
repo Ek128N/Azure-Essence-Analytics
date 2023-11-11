@@ -11,17 +11,11 @@ import { useEffect, useState } from "react";
 import { Button } from "azure-devops-ui/Button";
 import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "azure-devops-extension-api";
 import { RestTokenProvider } from "./modules/AuthTokenProvider";
+import { AzureFetch } from "./modules/AzureFetch";
 
 async function MigrateToEssenceProcessTemplate(templateId: string, projectId: string, vssRestClientOptions: IVssRestClientOptions) {
-  fetch(`${vssRestClientOptions.rootPath}${projectId}/_apis/wit/projectprocessmigration`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json;api-version=7.2-preview.1;excludeUrls=true;enumsAsNumbers=true;msDateFormat=true;noArrayWrap=true",
-      "Authorization": await vssRestClientOptions.authTokenProvider!.getAuthorizationHeader()
-    },
-    body: JSON.stringify({ typeId: templateId })
-  }).then(() => console.log("Migrated to Essence project template"));
+  AzureFetch(projectId + "/_apis/wit/projectprocessmigration", "POST", vssRestClientOptions, JSON.stringify( { typeId: templateId} ))
+    .then(() => console.log("Migrated to Essence project template"));
 }
 
 function Hub() {
@@ -47,13 +41,12 @@ function Hub() {
       console.log("Could not get project info");
       return;
     }
-    
 
     const processRestClient = new WorkItemTrackingProcessRestClient(vssRestClientOptions);
     const coreRestClient = new CoreRestClient(vssRestClientOptions);
 
     const processId: string = await coreRestClient
-      .getProjectProperties(project.id, ["System.CurrentProcessTemplateId"])
+      .getProjectProperties(project.id, ["System.ProcessTemplateType"])
       .then(props => props[0].value);
     const process = await coreRestClient.getProcessById(processId);
     console.log("Current process:", process);
@@ -69,14 +62,14 @@ function Hub() {
       return;
     }
 
-    const basicTemplateId = processes.find(item => item.name == "Basic")!.id;
-    const createdTemplate = await processRestClient.createNewProcess({
+    const basicTemplateId = processes.find(item => item.name == "Agile")!.id;
+    const createdTemplate = await AzureFetch("_apis/work/processes", "POST", vssRestClientOptions, JSON.stringify({
       name: "Essence",
       description: "Template for projects using methods and practices defined in Essence language",
       parentProcessTypeId: basicTemplateId,
-      referenceName: "HITS.Essence"
-    });
+    })).then(response => response.json());
     console.log("Created Essence process template", createdTemplate);
+
     await MigrateToEssenceProcessTemplate(createdTemplate.typeId, project.id, vssRestClientOptions);
   }
 

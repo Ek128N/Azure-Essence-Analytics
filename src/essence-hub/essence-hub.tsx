@@ -5,7 +5,7 @@ import * as SDK from "azure-devops-extension-sdk";
 import { Page } from "azure-devops-ui/Page";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import JsonInput from "./JsonInput/JsonInput";
+import JsonInput from "./jsonInput/JsonInput" ;
 
 class Hub extends React.Component {
   public componentDidMount() {

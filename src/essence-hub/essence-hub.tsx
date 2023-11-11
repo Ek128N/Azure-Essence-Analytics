@@ -32,8 +32,9 @@ function Hub() {
     SDK.init().then(() => {
       let host = SDK.getHost();
       console.log("Current host:", host);
+      console.log("Root path:", window.location.ancestorOrigins[0]);
       setVssRestClientOptions({
-        rootPath: `https://dev.azure.com/${host.name}/`,
+        rootPath: `${window.location.ancestorOrigins[0]}/${host.name}/`,
         authTokenProvider: restTokenProviderInstance
       });
     });
@@ -42,11 +43,11 @@ function Hub() {
   async function HandleClick() {
     const project = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
       .then(service => service.getProject());
-
     if (project === undefined) {
       console.log("Could not get project info");
       return;
     }
+    
 
     const processRestClient = new WorkItemTrackingProcessRestClient(vssRestClientOptions);
     const coreRestClient = new CoreRestClient(vssRestClientOptions);

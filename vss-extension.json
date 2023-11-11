@@ -8,7 +8,6 @@
   "demands": ["api-version/3.0"],
   "categories": ["Azure Boards"],
   "public": false,
-  "baseUri": "https://localhost:3000",
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"

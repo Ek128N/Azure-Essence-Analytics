@@ -1,6 +1,6 @@
 {
   "manifestVersion": 1,
-  "version": "1.0.4",
+  "version": "1.0.12",
   "id": "azure-essence-analytics",
   "name": "Azure Essence Analytics",
   "description": "",
@@ -32,5 +32,6 @@
         "uri": "dist/essence-hub/essence-hub.html"
       }
     }
-  ]
+  ],
+  "scopes": ["vso.work_write", "vso.project_write"]
 }

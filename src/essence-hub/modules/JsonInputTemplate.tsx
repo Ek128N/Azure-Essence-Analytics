@@ -1,6 +1,6 @@
 
 
-export class JsonInputTemplate{
+export default class JsonInputTemplate{
     public methodDefinition?:MethodDefinition;
     public alphas!:[Alpha];
     public workProducts!:[WorkProduct];
@@ -10,7 +10,6 @@ export class JsonInputTemplate{
 class Alpha{
 
     public name!:string;
-    // link ???
     public subAlphas?:[Alpha];
     public checkpoints!:[Checkpoint];
     public achievedState?:StateDefinition;

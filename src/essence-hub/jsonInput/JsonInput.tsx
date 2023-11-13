@@ -1,31 +1,19 @@
 import * as React from "react";
-import{JSX}from"react";
-import{Button}from"azure-devops-ui/Button";
+import {JSX, useState} from "react";
+import {Button} from "azure-devops-ui/Button";
+import JsonInputTemplate from "../modules/JsonInputTemplate";
 
 
-export default class JsonInput extends React.Component{
-    public render():JSX.Element{
-        return(
+export default function render(): JSX.Element {
+    const [jsonData, setJsonData] = useState<JsonInputTemplate>(new JsonInputTemplate());
 
-            <div>
-                <p>JsonInput or something else</p>
-                <input type="file" id="jsonInput" accept=".json"/>
-                <Button
-                    text="SubmitJson"
-                    onClick={this.onSubmitJson}
-                />
-            </div>
+    function ParseJson(): void {
 
-        );
-    }
-
-    private onSubmitJson=async():Promise<void>=>{
-
-        const jsonInputElement=document.getElementById("jsonInput") as HTMLInputElement;
+        const jsonInputElement = document.getElementById("jsonInput") as HTMLInputElement;
         let file = jsonInputElement.files![0];
 
 
-        if (file===undefined){
+        if (file === undefined) {
             //File was not attached
             throw new Error("File is undefined");
         }
@@ -34,20 +22,37 @@ export default class JsonInput extends React.Component{
 
         reader.readAsText(file);
 
-        reader.onload = function() {
+        reader.onload = function () {
             console.log(reader.result);
         };
 
-        reader.onerror = function() {
+        reader.onerror = function () {
             console.log(reader.error);
         };
 
-        let json= reader.result as string;
+        let json = reader.result as string;
         let obj = JSON.parse(json);
-        console.log(obj);
 
 
+        const template: JsonInputTemplate = Object.assign(new JsonInputTemplate, obj) as JsonInputTemplate;
+
+        setJsonData(template as JsonInputTemplate);
+        console.log(jsonData);
     }
 
 
+    return (
+
+        <div>
+            <p>JsonInput or something else</p>
+            <input type="file" id="jsonInput" accept=".json"/>
+            <Button
+                text="SubmitJson"
+                onClick={ParseJson}
+            />
+        </div>
+
+    );
 }
+
+

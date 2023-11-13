@@ -18,9 +18,34 @@ async function MigrateToEssenceProcessTemplate(templateId: string, projectId: st
     .then(() => console.log("Migrated to Essence project template"));
 }
 
+async function CheckProjectProcess(projectId: string, client: CoreRestClient) {
+  const processId: string = await client
+    .getProjectProperties(projectId, ["System.ProcessTemplateType"])
+    .then(props => props[0].value);
+
+  const process = await client.getProcessById(processId);
+  console.log("Current process:", process);
+  
+  if (process.name == "Essence") {
+    return true;
+  }
+  return false;
+}
+
+async function CreateEssenceProcess(agileId: string, options: IVssRestClientOptions) {
+  var createdTemplate = await AzureFetch("_apis/work/processes", "POST", options, JSON.stringify({
+    name: "Essence",
+    description: "Template for projects using methods and practices defined in Essence language",
+    parentProcessTypeId: agileId,
+  })).then(response => response.json());
+  console.log("Created Essence process template", createdTemplate);
+  return createdTemplate;
+}
+
 function Hub() {
   const [vssRestClientOptions, setVssRestClientOptions] = useState<IVssRestClientOptions>({});
-  const [restTokenProviderInstance, setRestTokenProviderInstance] = useState(new RestTokenProvider());
+  const [coreRestClient, setCoreRestClient] = useState<CoreRestClient>();
+  const [processRestClient, setProcessRestClient] = useState<WorkItemTrackingProcessRestClient>();
 
   useEffect(() => {
     SDK.init().then(() => {
@@ -29,8 +54,10 @@ function Hub() {
       console.log("Root path:", window.location.ancestorOrigins[0]);
       setVssRestClientOptions({
         rootPath: `${window.location.ancestorOrigins[0]}/${host.name}/`,
-        authTokenProvider: restTokenProviderInstance
+        authTokenProvider: new RestTokenProvider()
       });
+      setCoreRestClient(new CoreRestClient(vssRestClientOptions));
+      setProcessRestClient(new WorkItemTrackingProcessRestClient(vssRestClientOptions));
     });
   }, []);
 
@@ -42,15 +69,16 @@ function Hub() {
       return;
     }
 
-    const processRestClient = new WorkItemTrackingProcessRestClient(vssRestClientOptions);
-    const coreRestClient = new CoreRestClient(vssRestClientOptions);
+    if (coreRestClient === undefined) {
+      console.log("CoreRestClient is not defined");
+      return;
+    }
+    if (processRestClient === undefined) {
+      console.log("ProcessRestClient is not defined");
+      return;
+    }
 
-    const processId: string = await coreRestClient
-      .getProjectProperties(project.id, ["System.ProcessTemplateType"])
-      .then(props => props[0].value);
-    const process = await coreRestClient.getProcessById(processId);
-    console.log("Current process:", process);
-    if (process.name == "Essence") {
+    if (await CheckProjectProcess(project.id, coreRestClient)) {
       return;
     }
 
@@ -62,14 +90,8 @@ function Hub() {
       return;
     }
 
-    const basicTemplateId = processes.find(item => item.name == "Agile")!.id;
-    const createdTemplate = await AzureFetch("_apis/work/processes", "POST", vssRestClientOptions, JSON.stringify({
-      name: "Essence",
-      description: "Template for projects using methods and practices defined in Essence language",
-      parentProcessTypeId: basicTemplateId,
-    })).then(response => response.json());
-    console.log("Created Essence process template", createdTemplate);
-
+    const agileId = processes.find(item => item.name == "Agile")!.id;
+    const createdTemplate = await CreateEssenceProcess(agileId, vssRestClientOptions);
     await MigrateToEssenceProcessTemplate(createdTemplate.typeId, project.id, vssRestClientOptions);
   }
 

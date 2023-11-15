@@ -33,7 +33,7 @@ async function CheckProjectProcess(projectId: string, client: CoreRestClient) {
 }
 
 async function CreateEssenceProcess(agileId: string, options: IVssRestClientOptions) {
-  var createdTemplate = await AzureFetch("_apis/work/processes", "POST", options, JSON.stringify({
+  var createdTemplate = await AzureFetch("work/processes", "POST", options, JSON.stringify({
     name: "Essence",
     description: "Template for projects using methods and practices defined in Essence language",
     parentProcessTypeId: agileId,
@@ -49,19 +49,20 @@ function Hub() {
 
   useEffect(() => {
     SDK.init().then(() => {
-      let host = SDK.getHost();
+      const host = SDK.getHost();
       console.log("Current host:", host);
       console.log("Root path:", window.location.ancestorOrigins[0]);
-      setVssRestClientOptions({
+      const clientOptions = {
         rootPath: `${window.location.ancestorOrigins[0]}/${host.name}/`,
         authTokenProvider: new RestTokenProvider()
-      });
-      setCoreRestClient(new CoreRestClient(vssRestClientOptions));
-      setProcessRestClient(new WorkItemTrackingProcessRestClient(vssRestClientOptions));
+      }
+      setVssRestClientOptions(clientOptions);
+      setCoreRestClient(new CoreRestClient(clientOptions));
+      setProcessRestClient(new WorkItemTrackingProcessRestClient(clientOptions));
     });
   }, []);
 
-  async function HandleClick() {
+  async function HandleProcessMigration() {
     const project = await SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService)
       .then(service => service.getProject());
     if (project === undefined) {
@@ -71,10 +72,6 @@ function Hub() {
 
     if (coreRestClient === undefined) {
       console.log("CoreRestClient is not defined");
-      return;
-    }
-    if (processRestClient === undefined) {
-      console.log("ProcessRestClient is not defined");
       return;
     }
 
@@ -98,9 +95,9 @@ function Hub() {
   return (
     <Page>
       <Button
-        text="Press me"
+        text="Migrate to Essence process template"
         primary={true}
-        onClick={HandleClick}
+        onClick={HandleProcessMigration}
       />
     </Page>
   );

@@ -79,12 +79,38 @@ function Hub() {
     await MigrateToEssenceProcessTemplate(essenceTemplate.id, project.id, vssRestClientOptions);
   }
 
+  async function HandleProcessExport() {
+    if (coreRestClient === undefined) {
+      console.log("CoreRestClient is not defined");
+      return;
+    }
+    
+    const processes = await coreRestClient.getProcesses();
+    console.log("Available processes list:", processes);
+    const template = processes.find(item => item.name == "Agile");
+    if (template === undefined) {
+      console.log("Could not find Agile process template")
+      return;
+    }
+
+    AzureFetch("work/processadmin/processes/export/" + template.id, "GET", vssRestClientOptions, undefined, "application/zip;api-version=7.1-preview.1")
+    .then(res => res.blob())
+    .then(blob => {
+      var file = window.URL.createObjectURL(blob);
+      window.location.assign(file);
+    });
+  }
+
   return (
     <Page>
       <Button
         text="Migrate to Essence process template"
         primary={true}
         onClick={HandleProcessMigration}
+      />
+      <Button
+        text="Download Agile process template"
+        onClick={HandleProcessExport}
       />
     </Page>
   );

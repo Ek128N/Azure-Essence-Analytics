@@ -1,11 +1,11 @@
 import { IVssRestClientOptions } from "azure-devops-extension-api/Common/Context"
 
-export async function AzureFetch(path: string, method: string, vssRestClientOptions: IVssRestClientOptions, body?: string) {
+export async function AzureFetch(path: string, method: string, vssRestClientOptions: IVssRestClientOptions, body?: string, accept?: string) {
     return fetch(`${vssRestClientOptions.rootPath}_apis/${path}`, {
         method: method,
         headers: {
             ...(body === undefined ? {} : { "Content-Type": "application/json" }),
-            "Accept": "application/json;api-version=7.2-preview.2;excludeUrls=true;enumsAsNumbers=true;msDateFormat=true;noArrayWrap=true",
+            "Accept": accept ?? "application/json;api-version=7.2-preview.2;excludeUrls=true;enumsAsNumbers=true;msDateFormat=true;noArrayWrap=true",
             "Authorization": await vssRestClientOptions.authTokenProvider!.getAuthorizationHeader()
         },
         body: body

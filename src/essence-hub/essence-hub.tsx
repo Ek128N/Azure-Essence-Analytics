@@ -32,16 +32,6 @@ async function CheckProjectProcess(projectId: string, client: CoreRestClient) {
   return false;
 }
 
-async function CreateEssenceProcess(agileId: string, options: IVssRestClientOptions) {
-  var createdTemplate = await AzureFetch("work/processes", "POST", options, JSON.stringify({
-    name: "Essence",
-    description: "Template for projects using methods and practices defined in Essence language",
-    parentProcessTypeId: agileId,
-  })).then(response => response.json());
-  console.log("Created Essence process template", createdTemplate);
-  return createdTemplate;
-}
-
 function Hub() {
   const [vssRestClientOptions, setVssRestClientOptions] = useState<IVssRestClientOptions>({});
   const [coreRestClient, setCoreRestClient] = useState<CoreRestClient>();
@@ -82,14 +72,11 @@ function Hub() {
     const processes = await coreRestClient.getProcesses();
     console.log("Available processes list:", processes);
     const essenceTemplate = processes.find(item => item.name == "Essence");
-    if (essenceTemplate !== undefined) {
-      await MigrateToEssenceProcessTemplate(essenceTemplate.id, project.id, vssRestClientOptions);
+    if (essenceTemplate === undefined) {
+      console.log("Could not find Essence process template")
       return;
     }
-
-    const agileId = processes.find(item => item.name == "Agile")!.id;
-    const createdTemplate = await CreateEssenceProcess(agileId, vssRestClientOptions);
-    await MigrateToEssenceProcessTemplate(createdTemplate.typeId, project.id, vssRestClientOptions);
+    await MigrateToEssenceProcessTemplate(essenceTemplate.id, project.id, vssRestClientOptions);
   }
 
   return (

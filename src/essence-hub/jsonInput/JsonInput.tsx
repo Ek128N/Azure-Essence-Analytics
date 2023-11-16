@@ -5,7 +5,7 @@ import JsonInputTemplate from "../modules/JsonInputTemplate";
 
 
 export default function render(): JSX.Element {
-    const [jsonData, setJsonData] = useState<JsonInputTemplate>(new JsonInputTemplate());
+    const [jsonData, setJsonData] = useState<[JsonInputTemplate]>([new JsonInputTemplate()]);
 
     function ParseJson(): void {
 
@@ -34,9 +34,10 @@ export default function render(): JSX.Element {
         let obj = JSON.parse(json);
 
 
-        const template: JsonInputTemplate = Object.assign(new JsonInputTemplate, obj) as JsonInputTemplate;
+        const template: [JsonInputTemplate] = Object.assign([new JsonInputTemplate], obj) as [JsonInputTemplate];
 
-        setJsonData(template as JsonInputTemplate);
+        setJsonData(template as [JsonInputTemplate]);
+
         console.log(jsonData);
     }
 

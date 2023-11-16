@@ -1,72 +1,103 @@
-
-
-export default class JsonInputTemplate{
-    public methodDefinition?:MethodDefinition;
-    public alphas!:[Alpha];
-    public workProducts!:[WorkProduct];
+export default class JsonInputTemplate {
+    public activities?: [Activity];
+    public alphaContainments?: [AlphaContainment];
+    public alphaCriterions?: [AlphaCriterion];
+    public alphas?: [Alpha];
+    public checkpoints?: [Checkpoint];
+    public degreesOfEvidence?: [DegreeOfEvidence];
+    public levelOfDetails?: [LevelOfDetail];
+    public workProductCriterions?: [WorkProductCriterion];
+    public states?: [State];
+    public workProductManifests?: [WorkProductManifest];
+    public workProducts?: [WorkProduct];
 }
 
-
-class Alpha{
-
-    public name!:string;
-    public subAlphas?:[Alpha];
-    public checkpoints!:[Checkpoint];
-    public achievedState?:StateDefinition;
-    public AlphaDefinition!:AlphaDefinition;
-}
-class Checkpoint{
-
-    public checkpointDefinition!:CheckPointDefinition;
-    public fulfilled:boolean=false;
-    public degreeOfEvidence?:number; //Calculated on Checkpoint,StateDefinition,LevelOfDetailsDefinition
+class Activity {
+    public name!: string;
+    public description!: string;
+    public id!: string;
 }
 
-class CheckPointDefinition{
-
-    public name!:string;
-    public description?:string;
+class AlphaContainment {
+    public upperBound?: number;
+    public lowerBound?: number;
+    public supAlphaId?: string;
+    public subAlphaId?: string;
+    public normalValue?: number;
 }
 
-class StateDefinition{
-
-    public name!:string;
-    public description?:string;
-    public order!:number;
-    public checkpointDefinitions!:[CheckPointDefinition];
+class AlphaCriterion {
+    public criterionTypeEnumValue?: number
+    public partial?: boolean;
+    public minimal?: number;
+    public id?: string;
+    public stateId?: string;
+    public activityId?: string;
 }
 
-class AlphaDefinition{
-
-    public name!:string;
-    public description?:string;
-    public subAlphaDefinition?:AlphaDefinition;
-    public stateDefinitions!:[StateDefinition]
+class Alpha {
+    public parentAlphaId?: string;
+    public name?: string;
+    public description?: string;
+    public id!: string;
 }
 
-
-class MethodDefinition{
-    public name!:string;
-    public alphaDefinitions!:[AlphaDefinition];
-    public workProductDefinitions!:[WorkProductDefinition]
-}
-class WorkProductDefinition{
-    public name!:string;
-    public description?:string;
-    public levelOfDetailDefinitions!:[LevelOfDetailsDefinition];
+class Checkpoint {
+    public name?: string;
+    public description?: string;
+    public order?: number;
+    public id?: string;
+    public specialId?: string;
+    public degreeOfEvidenceEnumValueManagerOpinion?: number;
+    public detailId?: string;
 }
 
-class LevelOfDetailsDefinition{
-    public name!:string;
-    public description?:string;
-    public order!:number;
-    public checkpointDefinitions!:[CheckPointDefinition]
+class DegreeOfEvidence {
+    public id?: string;
+    public iCheckableId?: string;
+    public typeOfEvidence?: boolean;
+    public checkpointId?: string;
+    public degreeOfEvidenceEnumValue?: number;
 }
 
-class WorkProduct{
-    public name!:string;
-    public link?:string;
+class LevelOfDetail {
+    public id?: string;
+    public specialId?: string;
+    public name?: string;
+    public description?: string;
+    public workProductId?: string;
+    public order?: number;
+}
 
-    public workProductDefinition!:WorkProductDefinition;
-    public achievedLevel?:LevelOfDetailsDefinition;
+class WorkProductCriterion {
+    public criterionTypeEnumValue?: number;
+    public partial?: boolean;
+    public minimal?: number;
+    public id?: string;
+    public levelOfDetailId?: string;
+    public activityId?: string;
+}
+
+class State {
+    public id?: string;
+    public specialId?: string;
+    public name?: string;
+    public description?: string;
+    public alphaId?: string;
+    public order?: number;
+
+}
+
+class WorkProductManifest {
+    public upperBound?: number;
+    public lowerBound?: number;
+    public alphaId?: string;
+    public workProductId?: string;
+    public normalValue?: number;
+}
+
+class WorkProduct {
+    public name?: string;
+    public description?: string;
+    public id?: string;
 }

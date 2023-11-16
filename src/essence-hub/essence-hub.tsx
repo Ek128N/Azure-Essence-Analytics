@@ -7,11 +7,15 @@ import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { Page } from "azure-devops-ui/Page";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+
+import JsonInput from "./jsonInput/JsonInput" ;
+
 import { useEffect, useState } from "react";
 import { Button } from "azure-devops-ui/Button";
 import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "azure-devops-extension-api";
 import { RestTokenProvider } from "./modules/AuthTokenProvider";
 import { AzureFetch } from "./modules/AzureFetch";
+
 
 async function MigrateToEssenceProcessTemplate(templateId: string, projectId: string, vssRestClientOptions: IVssRestClientOptions) {
   AzureFetch(projectId + "/_apis/wit/projectprocessmigration", "POST", vssRestClientOptions, JSON.stringify( { typeId: templateId} ))
@@ -77,6 +81,7 @@ function Hub() {
       return;
     }
     await MigrateToEssenceProcessTemplate(essenceTemplate.id, project.id, vssRestClientOptions);
+
   }
 
   return (

@@ -4,6 +4,7 @@ typings/
 dist/
 out/
 .idea/
+debug.json
 
 #Ignore Vsix
 *.vsix

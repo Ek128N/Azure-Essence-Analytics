@@ -1,0 +1,40 @@
+<witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
+       <WORKITEMTYPE name="Essence Activity" refname="HITS.Essence.Activity">  
+          <DESCRIPTION>An activity defines one or more kinds of work items and gives guidance on how to perform these.</DESCRIPTION>
+          <FIELDS>
+            <FIELD name="Description" refname="System.Description" type="HTML" />
+          </FIELDS> 
+          <WORKFLOW>
+            <STATES>
+              <STATE value="New" />
+              <STATE value="Locked">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <READONLY />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+            </STATES>
+            <TRANSITIONS>
+              <TRANSITION from="" to="New">
+                <REASONS>
+                  <DEFAULTREASON value="Created" />
+                </REASONS>
+              </TRANSITION>
+              <TRANSITION from="New" to="Locked">
+                <REASONS>
+                  <DEFAULTREASON value="Locked" />
+                </REASONS>
+              </TRANSITION>
+            </TRANSITIONS>
+          </WORKFLOW>
+          <FORM>
+            <Layout>
+              <Control FieldName="System.Description" Type="FieldControl" Label="Description"/>
+            </Layout>
+          </FORM>
+       </WORKITEMTYPE>  
+</witd:WITD>  

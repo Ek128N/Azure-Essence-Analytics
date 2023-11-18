@@ -5,6 +5,8 @@ dist/
 out/
 .idea/
 debug.json
+.vscode/
+.vs/
 
 #Ignore Vsix
 *.vsix

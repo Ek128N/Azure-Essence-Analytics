@@ -1,0 +1,54 @@
+<witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
+       <WORKITEMTYPE name="Essence AlphaCriterion" refname="HITS.Essence.AlphaCriterion">
+          <FIELDS>
+            <FIELD name="Type" refname="HITS.Essence.CriterionType" type="String">
+              <ALLOWEDVALUES>
+                <LISTITEM value="0" />
+                <LISTITEM value="1" />
+              </ALLOWEDVALUES>
+            </FIELD>
+            <FIELD name="IsPartial" refname="HITS.Essence.CriterionIsPartial" type="Boolean" />
+            <FIELD name="Minimal" refname="HITS.Essence.CriterionMinimal" type="Integer" />
+          </FIELDS> 
+          <WORKFLOW>
+            <STATES>
+              <STATE value="New" />
+              <STATE value="Locked">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.CriterionType">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.CriterionIsPartial">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.CriterionMinimal">
+                    <READONLY />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+            </STATES>
+            <TRANSITIONS>
+              <TRANSITION from="" to="New">
+                <REASONS>
+                  <DEFAULTREASON value="Created" />
+                </REASONS>
+              </TRANSITION>
+              <TRANSITION from="New" to="Locked">
+                <REASONS>
+                  <DEFAULTREASON value="Locked" />
+                </REASONS>
+              </TRANSITION>
+            </TRANSITIONS>
+          </WORKFLOW>
+          <FORM>
+            <Layout>
+              <Control FieldName="HITS.Essence.CriterionType" Type="FieldControl" Label="Type"/>
+              <Control FieldName="HITS.Essence.CriterionIsPartial" Type="FieldControl" Label="Partial"/>
+              <Control FieldName="HITS.Essence.CriterionMinimal" Type="FieldControl" Label="Minimal"/>
+            </Layout>
+          </FORM>
+       </WORKITEMTYPE>  
+</witd:WITD>  

@@ -1,0 +1,35 @@
+<witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
+       <WORKITEMTYPE name="Essence Checkpoint" refname="HITS.Essence.Checkpoint">  
+          <DESCRIPTION>A checkpoint is an item in a check list that needs to be verified in a state.</DESCRIPTION>
+          <FIELDS>
+            <FIELD name="Title" refname="System.Title" type="String" />
+          </FIELDS> 
+          <WORKFLOW>
+            <STATES>
+              <STATE value="New" />
+              <STATE value="Locked">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <READONLY />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+            </STATES>
+            <TRANSITIONS>
+              <TRANSITION from="" to="New">
+                <REASONS>
+                  <DEFAULTREASON value="Created" />
+                </REASONS>
+              </TRANSITION>
+              <TRANSITION from="New" to="Locked">
+                <REASONS>
+                  <DEFAULTREASON value="Locked" />
+                </REASONS>
+              </TRANSITION>
+            </TRANSITIONS>
+          </WORKFLOW>
+          <FORM>
+            <Layout />
+          </FORM>
+       </WORKITEMTYPE>  
+</witd:WITD>  

@@ -91,6 +91,7 @@ function Hub() {
         primary={true}
         onClick={HandleProcessMigration}
       />
+      <JsonInput/>
     </Page>
   );
 }

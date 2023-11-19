@@ -1,5 +1,3 @@
-const path = require("path");
-const fs = require("fs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
@@ -17,7 +15,10 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [{ from: "**/*.html", context: "src" }],
+      patterns: [
+        { from: "**/*.html", context: "src" },
+        { from: "Essence.zip", context: "src" }
+      ],
     }),
   ],
   module: {
@@ -38,7 +39,7 @@ module.exports = {
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
-      },
+      }
     ],
   },
   resolve: {

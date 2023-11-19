@@ -8,22 +8,28 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
 import { Button } from "azure-devops-ui/Button";
+import { Status, Statuses, StatusSize } from "azure-devops-ui/Status";
 import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "azure-devops-extension-api";
 import { RestTokenProvider } from "../modules/AuthTokenProvider";
 import { AzureFetch } from "../modules/AzureFetch";
+import { ProcessDownload } from "../components/ProcessDownload";
+
 
 function Hub() {
   const [vssRestClientOptions, setVssRestClientOptions] = useState<IVssRestClientOptions>({});
   const [coreRestClient, setCoreRestClient] = useState<CoreRestClient>(new CoreRestClient(vssRestClientOptions));
   const [projectId, setProjectId] = useState<string>("");
+  const [isValidProcess, setIsValidProcess] = useState<boolean>();
 
   useEffect(() => {
+    let clientOptions: IVssRestClientOptions;
+    let projId: string;
     SDK.init({ loaded: false })
       .then(() => {
         const host = SDK.getHost();
         console.log("Current host:", host);
         console.log("Root path:", window.location.ancestorOrigins[0]);
-        const clientOptions = {
+        clientOptions = {
           rootPath: `${window.location.ancestorOrigins[0]}/${host.name}/`,
           authTokenProvider: new RestTokenProvider()
         }
@@ -37,46 +43,31 @@ function Hub() {
           throw new Error("Could not get current project info");
         }
         setProjectId(project.id);
+        projId = project.id;
         SDK.notifyLoadSucceeded();
       })
+      .then(() => CheckProjectProcess(projId, clientOptions))
       .catch(err => {
         SDK.notifyLoadFailed(err);
       });
   }, []);
 
-  async function HandleProcessExport() {
-    if (coreRestClient === undefined) {
-      console.log("CoreRestClient is not defined");
-      return;
-    }
-
-    const processes = await coreRestClient.getProcesses();
-    console.log("Available processes list:", processes);
-    const template = processes.find(item => item.name == "Agile");
-    if (template === undefined) {
-      console.log("Could not find Agile process template")
-      return;
-    }
-
-    AzureFetch({
-      path: "work/processadmin/processes/export/" + template.id,
+  async function CheckProjectProcess(projectId: string, vssRestClientOptions: IVssRestClientOptions) {
+    const props = await AzureFetch({
+      path: `_apis/projects/${projectId}/properties`,
       vssRestClientOptions: vssRestClientOptions,
-      accept: "application/zip",
-      apiVersion: "7.1-preview.1"
-    })
-      .then(res => res.blob())
-      .then(blob => {
-        var file = window.URL.createObjectURL(blob);
-        window.location.assign(file);
-      });
+      apiVersion: "7.0-preview",
+      query: "keys=System.ProcessTemplateType"
+    }).then(res => res.json());
+    setIsValidProcess(props[0].value == "cd776007-f12e-4188-891e-f210b6a39c12");
   }
 
   return (
     <Page>
-      <Button
-        text="Download Agile process template"
-        onClick={HandleProcessExport}
+      <ProcessDownload
+        vssRestClientOptions={vssRestClientOptions}
       />
+      {isValidProcess !== undefined && <p>Process template is {isValidProcess == false && "not"} valid</p>}
     </Page>
   );
 }

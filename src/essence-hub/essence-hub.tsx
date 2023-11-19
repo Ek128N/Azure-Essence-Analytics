@@ -8,13 +8,14 @@ import { Page } from "azure-devops-ui/Page";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import JsonInput from "./jsonInput/JsonInput" ;
+import JsonInput from "./components/JsonInput" ;
 
 import { useEffect, useState } from "react";
 import { Button } from "azure-devops-ui/Button";
 import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "azure-devops-extension-api";
 import { RestTokenProvider } from "./modules/AuthTokenProvider";
 import { AzureFetch } from "./modules/AzureFetch";
+import JsonInputTemplate from "./modules/JsonInputTemplate";
 
 
 async function MigrateToEssenceProcessTemplate(templateId: string, projectId: string, vssRestClientOptions: IVssRestClientOptions) {
@@ -37,9 +38,11 @@ async function CheckProjectProcess(projectId: string, client: CoreRestClient) {
 }
 
 function Hub() {
+
   const [vssRestClientOptions, setVssRestClientOptions] = useState<IVssRestClientOptions>({});
   const [coreRestClient, setCoreRestClient] = useState<CoreRestClient>();
   const [processRestClient, setProcessRestClient] = useState<WorkItemTrackingProcessRestClient>();
+  const [jsonData, setJsonData] = useState<[JsonInputTemplate]>([new JsonInputTemplate()]);
 
   useEffect(() => {
     SDK.init().then(() => {
@@ -84,6 +87,10 @@ function Hub() {
 
   }
 
+  function CheckState() {
+    console.log(jsonData);
+  }
+
   return (
     <Page>
       <Button
@@ -91,7 +98,12 @@ function Hub() {
         primary={true}
         onClick={HandleProcessMigration}
       />
-      <JsonInput/>
+      <Button
+          text="Check jsonData state"
+
+          onClick={CheckState}
+      />
+      <JsonInput setJsonData={setJsonData}/>
     </Page>
   );
 }

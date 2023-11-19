@@ -1,11 +1,16 @@
 import * as React from "react";
-import {JSX, useState} from "react";
+import {JSX} from "react";
 import {Button} from "azure-devops-ui/Button";
 import JsonInputTemplate from "../modules/JsonInputTemplate";
 import * as SDK from "azure-devops-extension-sdk";
 
-export default function render(): JSX.Element {
-    const [jsonData, setJsonData] = useState<[JsonInputTemplate]>([new JsonInputTemplate()]);
+
+interface renderProps {
+    setJsonData: (value: (((prevState: [JsonInputTemplate]) => [JsonInputTemplate]) | [JsonInputTemplate])) => void
+}
+
+export default function render({setJsonData}: renderProps): JSX.Element {
+
 
     function ParseJson(): void {
 

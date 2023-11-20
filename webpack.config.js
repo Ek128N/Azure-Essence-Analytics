@@ -1,14 +1,9 @@
-const path = require("path");
-const fs = require("fs");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
-const entries = fs
-  .readdirSync(path.join(__dirname, "src"))
-  .filter((dir) => fs.statSync(path.join("src", dir)).isDirectory())
-  .reduce((acc, dir) => ({ ...acc, [dir]: `./src/${dir}/${dir}` }), {});
-
 module.exports = {
-  entry: entries,
+  entry: {
+    "essence-hub": "./src/essence-hub/essence-hub.tsx"
+  },
   devtool: "inline-source-map",
   output: {
     filename: "[name]/[name].js",
@@ -20,7 +15,9 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: [{ from: "**/*.html", context: "src" }],
+      patterns: [
+        { from: "**/*.html", context: "src" },
+      ],
     }),
   ],
   module: {
@@ -41,7 +38,7 @@ module.exports = {
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
-      },
+      }
     ],
   },
   resolve: {

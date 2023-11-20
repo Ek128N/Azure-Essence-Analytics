@@ -8,7 +8,8 @@ import { Page } from "azure-devops-ui/Page";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import JsonInput from "./components/JsonInput" ;
+import JsonInput from "../components/JsonInput/JsonInput" ;
+import ProcessConfig from "../components/ProcessConfig/ProcessConfig";
 
 import { useEffect, useState } from "react";
 import { Button } from "azure-devops-ui/Button";
@@ -104,6 +105,7 @@ function Hub() {
           onClick={CheckState}
       />
       <JsonInput setJsonData={setJsonData}/>
+      <ProcessConfig/>
     </Page>
   );
 }

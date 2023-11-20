@@ -13,6 +13,7 @@ import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "az
 import { RestTokenProvider } from "../modules/AuthTokenProvider";
 import { AzureFetch } from "../modules/AzureFetch";
 import { ProcessDownload } from "../components/ProcessDownload";
+import { ProcessImport } from "../components/ProcessImport";
 
 
 function Hub() {
@@ -56,7 +57,6 @@ function Hub() {
     const props = await AzureFetch({
       path: `_apis/projects/${projectId}/properties`,
       vssRestClientOptions: vssRestClientOptions,
-      apiVersion: "7.0-preview",
       query: "keys=System.ProcessTemplateType"
     }).then(res => res.json());
     setIsValidProcess(props[0].value == "cd776007-f12e-4188-891e-f210b6a39c12");
@@ -65,6 +65,9 @@ function Hub() {
   return (
     <Page>
       <ProcessDownload
+        vssRestClientOptions={vssRestClientOptions}
+      />
+      <ProcessImport
         vssRestClientOptions={vssRestClientOptions}
       />
       {isValidProcess !== undefined && <p>Process template is {isValidProcess == false && "not"} valid</p>}

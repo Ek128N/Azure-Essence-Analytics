@@ -12,7 +12,7 @@ interface IAzureFetchParams {
 }
 
 export async function AzureFetch(params: IAzureFetchParams) {
-    return fetch(`${params.vssRestClientOptions.rootPath}${params.path}?api-version=${params.apiVersion ?? "7.1-preview.2"}${params.query ? "&" + params.query : ""}`, {
+    return fetch(`${params.vssRestClientOptions.rootPath}${params.path}?api-version=${params.apiVersion ?? "7.0-preview"}${params.query ? "&" + params.query : ""}`, {
         method: params.method ?? "GET",
         headers: {
             ...(params.body === undefined ? {} : { "Content-Type": params.contentType ?? "application/json" }),

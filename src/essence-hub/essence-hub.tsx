@@ -2,23 +2,22 @@ import "azure-devops-ui/Core/override.css";
 import "./essence-hub.scss";
 
 import * as SDK from "azure-devops-extension-sdk";
-import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { Page } from "azure-devops-ui/Page";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
-import { Button } from "azure-devops-ui/Button";
-import { Status, Statuses, StatusSize } from "azure-devops-ui/Status";
+import { Header, TitleSize } from "azure-devops-ui/Header";
+import { Spinner, SpinnerSize } from "azure-devops-ui/Spinner";
+import { MessageCard, MessageCardSeverity } from "azure-devops-ui/MessageCard";
 import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "azure-devops-extension-api";
 import { RestTokenProvider } from "../modules/AuthTokenProvider";
 import { AzureFetch } from "../modules/AzureFetch";
-import { ProcessDownload } from "../components/ProcessDownload";
 import { ProcessImport } from "../components/ProcessImport";
+import { ProcessCheck } from "../components/ProcessCheck";
 
 
 function Hub() {
   const [vssRestClientOptions, setVssRestClientOptions] = useState<IVssRestClientOptions>({});
-  const [coreRestClient, setCoreRestClient] = useState<CoreRestClient>(new CoreRestClient(vssRestClientOptions));
   const [projectId, setProjectId] = useState<string>("");
   const [isValidProcess, setIsValidProcess] = useState<boolean>();
 
@@ -35,7 +34,6 @@ function Hub() {
           authTokenProvider: new RestTokenProvider()
         }
         setVssRestClientOptions(clientOptions);
-        setCoreRestClient(new CoreRestClient(clientOptions));
       })
       .then(() => SDK.getService<IProjectPageService>(CommonServiceIds.ProjectPageService))
       .then(service => service.getProject())
@@ -63,14 +61,18 @@ function Hub() {
   }
 
   return (
-    <Page>
-      <ProcessDownload
-        vssRestClientOptions={vssRestClientOptions}
+    <Page className="padding-horizontal-16 flex-grow">
+      <Header
+        title="Essence"
+        titleSize={TitleSize.Large}
+        className="margin-bottom-16"
       />
+      <ProcessCheck isValidProcess={isValidProcess}>
+        Json parse
+      </ProcessCheck>
       <ProcessImport
         vssRestClientOptions={vssRestClientOptions}
       />
-      {isValidProcess !== undefined && <p>Process template is {isValidProcess == false && "not"} valid</p>}
     </Page>
   );
 }

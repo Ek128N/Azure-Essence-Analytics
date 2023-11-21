@@ -7,12 +7,9 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
 import { Header, TitleSize } from "azure-devops-ui/Header";
-import { Spinner, SpinnerSize } from "azure-devops-ui/Spinner";
-import { MessageCard, MessageCardSeverity } from "azure-devops-ui/MessageCard";
 import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "azure-devops-extension-api";
 import { RestTokenProvider } from "../modules/AuthTokenProvider";
 import { AzureFetch } from "../modules/AzureFetch";
-import { ProcessImport } from "../components/ProcessImport";
 import { ProcessCheck } from "../components/ProcessCheck";
 
 
@@ -70,9 +67,6 @@ function Hub() {
       <ProcessCheck isValidProcess={isValidProcess}>
         Json parse
       </ProcessCheck>
-      <ProcessImport
-        vssRestClientOptions={vssRestClientOptions}
-      />
     </Page>
   );
 }

@@ -1,0 +1,45 @@
+<witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
+       <WORKITEMTYPE name="Essence State" refname="HITS.Essence.State">  
+          <DESCRIPTION>A state expresses a situation where some condition holds.</DESCRIPTION>
+          <FIELDS>
+            <FIELD name="Description" refname="System.Description" type="HTML" />
+            <FIELD name="Order" refname="HITS.Essence.StateOrder" type="Integer" />
+          </FIELDS> 
+          <WORKFLOW>
+            <STATES>
+              <STATE value="New" />
+              <STATE value="Locked">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.StateOrder">
+                    <READONLY />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+            </STATES>
+            <TRANSITIONS>
+              <TRANSITION from="" to="New">
+                <REASONS>
+                  <DEFAULTREASON value="Created" />
+                </REASONS>
+              </TRANSITION>
+              <TRANSITION from="New" to="Locked">
+                <REASONS>
+                  <DEFAULTREASON value="Locked" />
+                </REASONS>
+              </TRANSITION>
+            </TRANSITIONS>
+          </WORKFLOW>
+          <FORM>
+            <Layout>
+              <Control FieldName="System.Description" Type="FieldControl" Label="Description" />
+              <Control FieldName="HITS.Essence.StateOrder" Type="FieldControl" Label="Order" />
+            </Layout>
+          </FORM>
+       </WORKITEMTYPE>  
+</witd:WITD>  

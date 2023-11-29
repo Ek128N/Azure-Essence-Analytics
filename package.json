@@ -8,11 +8,12 @@
   },
   "scripts": {
     "clean": "rimraf ./dist ./out",
-    "compile": "npm run clean && webpack --mode production",
-    "compile:dev": "npm run clean && webpack --mode development",
+    "compile": "npm run clean && npm run zip && webpack --mode production",
+    "compile:dev": "npm run clean && npm run zip && webpack --mode development",
     "package:dev": "npm run compile:dev && tfx extension create --rev-version --output-path vsixPackaged",
     "package:debug": "npm run compile:dev && tfx extension create --rev-version --overrides-file configs/debug.json --output-path vsixPackaged",
-    "start:dev": "webpack-dev-server --mode development"
+    "start:dev": "webpack-dev-server --mode development",
+    "zip": "cd processTemplate && bestzip ../src/Essence.zip *"
   },
   "dependencies": {
     "azure-devops-extension-api": "^2.222.0",
@@ -27,6 +28,7 @@
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
     "@webpack-cli/generators": "^3.0.7",
+    "bestzip": "^2.2.1",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "eslint": "^8.44.0",

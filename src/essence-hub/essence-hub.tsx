@@ -5,18 +5,26 @@ import * as SDK from "azure-devops-extension-sdk";
 import { Page } from "azure-devops-ui/Page";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+
+import JsonInput from "./components/JsonInput" ;
+
 import { useEffect, useState } from "react";
+import { Button } from "azure-devops-ui/Button";
 import { Header, TitleSize } from "azure-devops-ui/Header";
 import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "azure-devops-extension-api";
 import { RestTokenProvider } from "../modules/AuthTokenProvider";
 import { AzureFetch } from "../modules/AzureFetch";
+import JsonInputTemplate from "../modules/JsonInputTemplate";
+
 import { ProcessCheck } from "../components/ProcessCheck";
 
 
 function Hub() {
+
   const [vssRestClientOptions, setVssRestClientOptions] = useState<IVssRestClientOptions>({});
   const [projectId, setProjectId] = useState<string>("");
   const [isValidProcess, setIsValidProcess] = useState<boolean>();
+  const [jsonData, setJsonData] = useState<[JsonInputTemplate]>([new JsonInputTemplate()]);
 
   useEffect(() => {
     let clientOptions: IVssRestClientOptions;
@@ -55,6 +63,11 @@ function Hub() {
       query: "keys=System.ProcessTemplateType"
     }).then(res => res.json());
     setIsValidProcess(props[0].value == "cd776007-f12e-4188-891e-f210b6a39c12");
+
+  }
+
+  function CheckState() {
+    console.log(jsonData);
   }
 
   return (
@@ -65,7 +78,12 @@ function Hub() {
         className="margin-bottom-16"
       />
       <ProcessCheck isValidProcess={isValidProcess}>
-        Json parse
+        <Button
+            text="Check jsonData state"
+
+            onClick={CheckState}
+        />
+        <JsonInput setJsonData={setJsonData}/>
       </ProcessCheck>
     </Page>
   );

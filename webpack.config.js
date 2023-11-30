@@ -2,7 +2,8 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: {
-    "essence-hub": "./src/essence-hub/essence-hub.tsx"
+    "essence-hub": "./src/essence-hub/essence-hub.tsx",
+    "essence-admin-hub": "./src/essence-admin-hub/essence-admin-hub.tsx"
   },
   devtool: "inline-source-map",
   output: {
@@ -17,6 +18,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: "**/*.html", context: "src" },
+        { from: "Essence.zip", context: "src" }
       ],
     }),
   ],

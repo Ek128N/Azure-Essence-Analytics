@@ -5,6 +5,9 @@ dist/
 out/
 .idea/
 debug.json
+.vscode/
+.vs/
+src/Essence.zip
 
 #Ignore Vsix
 *.vsix

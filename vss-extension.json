@@ -1,17 +1,12 @@
 {
   "manifestVersion": 1,
-  "version": "1.0.22",
+  "version": "1.0.25",
   "id": "azure-essence-analytics",
   "name": "Azure Essence Analytics",
   "description": "",
   "publisher": "HITS",
-  "demands": [
-    "api-version/3.0",
-    "contribution/HITS.azure-essence-analytics.essence-hub"
-  ],
-  "categories": [
-    "Azure Boards"
-  ],
+  "demands": ["api-version/3.0"],
+  "categories": ["Azure Boards"],
   "public": false,
   "targets": [
     {
@@ -35,15 +30,18 @@
         "name": "Essence",
         "uri": "dist/essence-hub/essence-hub.html"
       }
+    },
+    {
+      "id": "essence-admin-hub",
+      "type": "ms.vss-web.hub",
+      "targets": [
+        "ms.vss-web.collection-admin-hub-group"
+      ],
+      "properties": {
+        "name": "Essence Admin Panel",
+        "uri": "dist/essence-admin-hub/essence-admin-hub.html"
+      }
     }
   ],
-  "scopes": [
-    "vso.work_full",
-    "vso.project_write",
-    "vso.connected_server",
-    "vso.serviceendpoint_manage",
-    "vso.project_manage",
-    "vso.taskgroups_manage",
-    "vso.identity_manage"
-  ]
+  "scopes": ["vso.work_write", "vso.project_write"]
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {JSX} from "react";
 import {Button} from "azure-devops-ui/Button";
-import JsonInputTemplate from "../../essence-hub/modules/JsonInputTemplate";
+import JsonInputTemplate from "../../modules/JsonInputTemplate";
 import * as SDK from "azure-devops-extension-sdk";
 
 

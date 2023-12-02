@@ -87,8 +87,9 @@ function Hub() {
             onClick={CheckState}
         />
         <JsonInput setJsonData={setJsonData}/>
+          <ProcessConfig/>
       </ProcessCheck>
-        <ProcessConfig/>
+
     </Page>
   );
 }

@@ -3,8 +3,18 @@ node_modules/
 typings/
 dist/
 out/
+.idea/
+debug.json
+.vscode/
+.vs/
+src/Essence.zip
 
+#Ignore Vsix
 *.vsix
+vsixPackaged/
+
+#ignore eslint
+.eslintrc.js
 
 # JUNIT testresult
 test-results.xml

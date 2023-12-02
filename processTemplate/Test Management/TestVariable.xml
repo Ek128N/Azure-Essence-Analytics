@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TestVariables>
+  <TestVariable
+                name="Operating System" description="Default operating systems">
+    <AllowedValue value ="Windows 10" />
+    <AllowedValue value ="Windows 8.1" />
+    <AllowedValue value ="Windows 8" />
+    <AllowedValue value ="Windows 7" />
+  </TestVariable>
+  <TestVariable
+                name="Browser" description="Default browsers">
+    <AllowedValue value ="Microsoft Edge" />
+    <AllowedValue value ="Internet Explorer 11.0" />
+    <AllowedValue value ="FireFox" />
+    <AllowedValue value ="Chrome" />
+    <AllowedValue value ="Safari" />
+  </TestVariable>
+</TestVariables>

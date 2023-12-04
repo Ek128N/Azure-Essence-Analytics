@@ -27,7 +27,7 @@ function Hub() {
   const [vssRestClientOptions, setVssRestClientOptions] = useState<IVssRestClientOptions>({});
   const [projectId, setProjectId] = useState<string>("");
   const [isValidProcess, setIsValidProcess] = useState<boolean>();
-  const [jsonData, setJsonData] = useState<[JsonInputTemplate]>([new JsonInputTemplate()]);
+
 
   useEffect(() => {
     let clientOptions: IVssRestClientOptions;
@@ -69,9 +69,7 @@ function Hub() {
 
   }
 
-  function CheckState() {
-    console.log(jsonData);
-  }
+
 
   return (
     <Page className="padding-horizontal-16 flex-grow">
@@ -81,12 +79,8 @@ function Hub() {
         className="margin-bottom-16"
       />
       <ProcessCheck isValidProcess={isValidProcess}>
-        <Button
-            text="Check jsonData state"
 
-            onClick={CheckState}
-        />
-        <JsonInput setJsonData={setJsonData}/>
+        <JsonInput projectId={projectId} vssRestClientOptions={vssRestClientOptions}/>
           <ProcessConfig/>
       </ProcessCheck>
 

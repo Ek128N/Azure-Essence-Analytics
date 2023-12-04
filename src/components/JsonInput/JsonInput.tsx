@@ -1,16 +1,21 @@
 import * as React from "react";
-import {JSX} from "react";
+import {JSX, useState} from "react";
 import {Button} from "azure-devops-ui/Button";
 import JsonInputTemplate from "../../modules/JsonInputTemplate";
 import * as SDK from "azure-devops-extension-sdk";
+import {createWorkItems} from "./WorkItemCreator";
+import {IVssRestClientOptions} from "azure-devops-extension-api";
 
-
-interface renderProps {
-    setJsonData: (value: (((prevState: [JsonInputTemplate]) => [JsonInputTemplate]) | [JsonInputTemplate])) => void
+export interface ProjectData{
+    projectId:string
+    vssRestClientOptions:IVssRestClientOptions,
 }
 
-export default function render({setJsonData}: renderProps): JSX.Element {
 
+export default function render(projectData:ProjectData): JSX.Element {
+    //PassDown ProjectID & Vss data
+
+    const [jsonData, setJsonData] = useState<[JsonInputTemplate]>([new JsonInputTemplate()]);
 
     function ParseJson(): void {
 
@@ -41,19 +46,26 @@ export default function render({setJsonData}: renderProps): JSX.Element {
             const template: [JsonInputTemplate] = Object.assign([new JsonInputTemplate], obj) as [JsonInputTemplate];
 
             setJsonData(template as [JsonInputTemplate]);
-            SDK.register("EssenceData", template);
 
-            //console.log(jsonData[0].alphas);
-            //console.log(template);
         }
 
+        createWorkItems(jsonData,projectData);
 
     }
+    function CheckState() {
+        console.log(jsonData);
+    }
+
 
 
     return (
 
         <div>
+            <Button
+                text="Check jsonData state"
+
+                onClick={CheckState}
+            />
             <p>JsonInput or something else</p>
             <input type="file" id="jsonInput" accept=".json"/>
             <Button

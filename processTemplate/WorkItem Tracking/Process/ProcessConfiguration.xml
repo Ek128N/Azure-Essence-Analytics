@@ -17,6 +17,7 @@
     </TypeField>
   </TypeFields>
   <PortfolioBacklogs>
+    <!--
     <PortfolioBacklog category="Microsoft.EpicCategory" pluralName="Epics" singularName="Epic" workItemCountLimit="1000">
       <States>
         <State value="New" type="Proposed" />
@@ -39,7 +40,7 @@
         </Fields>
       </AddPanel>
     </PortfolioBacklog>
-    <PortfolioBacklog category="Microsoft.FeatureCategory" pluralName="Features" singularName="Feature" parent="Microsoft.EpicCategory" workItemCountLimit="1000">
+    <PortfolioBacklog category="Microsoft.FeatureCategory" pluralName="Features" singularName="Feature" workItemCountLimit="1000">
       <States>
         <State value="New" type="Proposed" />
         <State value="Active" type="InProgress" />
@@ -61,8 +62,62 @@
         </Fields>
       </AddPanel>
     </PortfolioBacklog>
+    -->
+    <PortfolioBacklog category="HITS.EssenceAlphaCategory" pluralName="Alphas" singularName="Alpha"  workItemCountLimit="1000">
+      <States>
+        <State value="New" type="Proposed" />
+        <State value="Active" type="InProgress" />
+        <State value="Closed" type="Complete" />
+      </States>
+      <Columns>
+        <Column refname="System.WorkItemType" width="100" />
+        <Column refname="System.Title" width="400" />
+        <Column refname="System.State" width="100" />
+        <Column refname="System.Tags" width="200" />
+      </Columns>
+      <AddPanel>
+        <Fields>
+          <Field refname="System.Title" />
+        </Fields>
+      </AddPanel>
+    </PortfolioBacklog>
+    <PortfolioBacklog category="HITS.EssenceStateCategory" parent="HITS.EssenceAlphaCategory" pluralName="States" singularName="State"  workItemCountLimit="1000" >
+      <States>
+        <State value="New" type="Proposed" />
+        <State value="Active" type="InProgress" />
+        <State value="Closed" type="Complete" />
+      </States>
+      <Columns>
+        <Column refname="System.WorkItemType" width="100" />
+        <Column refname="System.Title" width="400" />
+        <Column refname="System.State" width="100" />
+        <Column refname="System.Tags" width="200" />
+      </Columns>
+      <AddPanel>
+        <Fields>
+          <Field refname="System.Title" />
+        </Fields>
+      </AddPanel>
+    </PortfolioBacklog>
+    <PortfolioBacklog category="HITS.EssenceCheckpointCategory" parent="HITS.EssenceStateCategory" pluralName="Checkpoints" singularName="Checkpoint"  workItemCountLimit="1000" >
+        <States>
+          <State value="New" type="Proposed" />
+          <State value="Closed" type="Complete" />
+        </States>
+        <Columns>
+          <Column refname="System.WorkItemType" width="100" />
+          <Column refname="System.Title" width="400" />
+          <Column refname="System.State" width="100" />
+          <Column refname="System.Tags" width="200" />
+        </Columns>
+        <AddPanel>
+          <Fields>
+            <Field refname="System.Title" />
+          </Fields>
+        </AddPanel>
+      </PortfolioBacklog>
   </PortfolioBacklogs>
-  <RequirementBacklog category="Microsoft.RequirementCategory" pluralName="Stories" singularName="User Story" workItemCountLimit="1000">
+  <RequirementBacklog category="Microsoft.RequirementCategory" parent="HITS.EssenceStateCategory" pluralName="Stories" singularName="User Story" workItemCountLimit="1000">
     <States>
       <State value="New" type="Proposed" />
       <State value="Active" type="InProgress" />
@@ -154,7 +209,7 @@
   </WorkItemColors>
   <Properties>
     <Property name="BugsBehavior" value="AsTasks" />
-    <Property name="HiddenBacklogs" value="Microsoft.EpicCategory" />
+    <Property name="HiddenBacklogs" value="HITS.EssenceCheckpointCategory;Microsoft.RequirementCategory" /> 
     <Property name="WorkItemTypeIcons" value="User Story=icon_book,Feature=icon_trophy,Epic=icon_crown,Task=icon_clipboard,Bug=icon_insect,Code Review Request=icon_code_review,Code Review Response=icon_code_response,Feedback Request=icon_review,Feedback Response=icon_response,Issue=icon_traffic_cone,Shared Steps=icon_test_step,Test Case=icon_test_case,Test Plan=icon_test_plan,Test Suite=icon_test_suite,Shared Parameter=icon_test_parameter" />
   </Properties>
 </ProjectProcessConfiguration>

@@ -68,6 +68,9 @@
         <QueryFolder name="Troubleshooting">
           <Query name="Work Items With Summary Values" fileName="WorkItem Tracking\Queries\WorkItemsWithSummaryValues.wiq" />
         </QueryFolder>
+        <QueryFolder name="Essence">
+          <Query name="Alphas" fileName="WorkItem Tracking\Queries\Alphas.wiq" />
+        </QueryFolder>
         <Query name="My Bugs" fileName="WorkItem Tracking\Queries\MyBugs.wiq" />
         <Query name="My Tasks" fileName="WorkItem Tracking\Queries\MyTasks.wiq" />
         <Query name="Feedback" fileName="WorkItem Tracking\Queries\Feedback.wiq" />

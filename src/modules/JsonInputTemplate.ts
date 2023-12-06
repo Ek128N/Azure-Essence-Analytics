@@ -16,14 +16,14 @@ export default class JsonInputTemplate {
 interface WorkItemId{
      WIId?:string|null;
 }
-class Activity implements WorkItemId{
+export class Activity implements WorkItemId{
     public WIId?:string|null;
     public name!: string;
     public description!: string;
     public id!: string;
 }
 
-class AlphaContainment {
+export class AlphaContainment {
     public upperBound?: number;
     public lowerBound?: number;
     public supAlphaId?: string;
@@ -31,7 +31,7 @@ class AlphaContainment {
     public normalValue?: number;
 }
 
-class AlphaCriterion implements WorkItemId {
+export class AlphaCriterion implements WorkItemId {
     public WIId?:string|null;
     public criterionTypeEnumValue?: number
     public partial?: boolean;
@@ -49,7 +49,7 @@ export class Alpha implements WorkItemId {
     public id!: string;
 }
 
-class Checkpoint implements WorkItemId {
+export class Checkpoint implements WorkItemId {
     public WIId?:string|null;
     public name?: string;
     public description?: string;
@@ -69,7 +69,7 @@ class DegreeOfEvidence implements WorkItemId {
     public degreeOfEvidenceEnumValue?: number;
 }
 
-class LevelOfDetail implements WorkItemId {
+export class LevelOfDetail implements WorkItemId {
     public WIId?:string|null;
     public id?: string;
     public specialId?: string;
@@ -79,7 +79,7 @@ class LevelOfDetail implements WorkItemId {
     public order?: number;
 }
 
-class WorkProductCriterion implements WorkItemId {
+export class WorkProductCriterion implements WorkItemId {
     public WIId?:string|null;
     public criterionTypeEnumValue?: number;
     public partial?: boolean;
@@ -89,7 +89,7 @@ class WorkProductCriterion implements WorkItemId {
     public activityId?: string;
 }
 
-class State implements WorkItemId {
+export class State implements WorkItemId {
     public WIId?:string|null;
     public id?: string;
     public specialId?: string;
@@ -100,7 +100,7 @@ class State implements WorkItemId {
 
 }
 
-class WorkProductManifest {
+export class WorkProductManifest {
     public upperBound?: number;
     public lowerBound?: number;
     public alphaId?: string;
@@ -108,7 +108,7 @@ class WorkProductManifest {
     public normalValue?: number;
 }
 
-class WorkProduct implements WorkItemId {
+export class WorkProduct implements WorkItemId {
     public WIId?:string|null;
     public name?: string;
     public description?: string;

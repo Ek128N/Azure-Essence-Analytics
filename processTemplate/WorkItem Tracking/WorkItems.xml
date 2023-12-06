@@ -31,6 +31,7 @@
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Issue.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\SharedParameter.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Alpha.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\SubAlphaDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\SubAlpha.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaState.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Checkpoint.xml" />
@@ -70,6 +71,7 @@
         </QueryFolder>
         <QueryFolder name="Essence">
           <Query name="Alphas" fileName="WorkItem Tracking\Queries\Alphas.wiq" />
+          <Query name="SubAlphaDefinitions" fileName="WorkItem Tracking\Queries\SubAlphaDefinitions.wiq" />
         </QueryFolder>
         <Query name="My Bugs" fileName="WorkItem Tracking\Queries\MyBugs.wiq" />
         <Query name="My Tasks" fileName="WorkItem Tracking\Queries\MyTasks.wiq" />

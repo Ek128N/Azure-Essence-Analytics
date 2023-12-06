@@ -198,7 +198,8 @@
     <WorkItemColor primary="FF004B50" secondary="FFFCEECF" name="Test Suite" />
     <WorkItemColor primary="FF004B50" secondary="FFFCEECF" name="Shared Parameter" />
     <WorkItemColor primary="FF000000" secondary="FFFCEECF" name="Essence Alpha" />
-    <WorkItemColor primary="FF808080" secondary="FFFCEECF" name="Essence SubAlpha" />
+    <WorkItemColor primary="FF808080" secondary="FFFCEECF" name="Essence SubAlphaDefinition" />
+    <WorkItemColor primary="FF505050" secondary="FFFCEECF" name="Essence SubAlpha" />
     <WorkItemColor primary="FF7E00C2" secondary="FFFCEECF" name="Essence State" />
     <WorkItemColor primary="FF0098C7" secondary="FFFCEECF" name="Essence Checkpoint" />
     <WorkItemColor primary="FF0DC200" secondary="FFFCEECF" name="Essence AlphaCriterion" />

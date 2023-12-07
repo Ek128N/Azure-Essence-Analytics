@@ -37,7 +37,8 @@
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Checkpoint.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaCriterion.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Activity.xml" />
-        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProduct.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProductDefinition.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProduct.xml" /> 
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\LevelOfDetail.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProductCriterion.xml" />
       </WORKITEMTYPES>

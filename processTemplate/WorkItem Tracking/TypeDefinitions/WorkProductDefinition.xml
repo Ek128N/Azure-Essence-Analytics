@@ -1,5 +1,6 @@
 <witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
-       <WORKITEMTYPE name="Essence SubAlphaDefinition" refname="HITS.Essence.SubAlphaDefinition">  
+       <WORKITEMTYPE name="Essence WorkProductDefinition" refname="HITS.Essence.WorkProductDefinition">
+       <DESCRIPTION>A piece of work that should be done to complete the work.</DESCRIPTION>
           <FIELDS>
             <FIELD name="Title" refname="System.Title" type="String">
               <REQUIRED />

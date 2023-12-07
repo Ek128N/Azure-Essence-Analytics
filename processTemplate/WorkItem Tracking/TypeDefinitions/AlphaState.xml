@@ -8,11 +8,12 @@
             <FIELD name="Description" refname="System.Description" type="HTML">
               <REQUIRED />
             </FIELD>
-            <FIELD name="Stack Rank" refname="Microsoft.VSTS.Common.StackRank" type="Double">
-              <HELPTEXT>Work first on items with lower-valued stack rank.</HELPTEXT>
-            </FIELD>
             <FIELD name="Order" refname="HITS.Essence.StateOrder" type="Integer">
               <REQUIRED />
+            </FIELD>
+            <FIELD name="Special Id" refname="HITS.Essence.SpecialId" type="String" />
+            <FIELD name="Stack Rank" refname="Microsoft.VSTS.Common.StackRank" type="Double">
+              <HELPTEXT>Work first on items with lower-valued stack rank.</HELPTEXT>
             </FIELD>
           </FIELDS> 
           <WORKFLOW>
@@ -28,6 +29,9 @@
                   <FIELD refname="HITS.Essence.StateOrder">
                     <FROZEN />
                   </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
+                    <FROZEN />
+                  </FIELD>
                 </FIELDS>
               </STATE>
               <STATE value="Active">
@@ -41,6 +45,9 @@
                   <FIELD refname="HITS.Essence.StateOrder">
                     <READONLY />
                   </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
+                    <READONLY />
+                  </FIELD>
                 </FIELDS>
               </STATE>
               <STATE value="Closed">
@@ -52,6 +59,9 @@
                     <READONLY />
                   </FIELD>
                   <FIELD refname="HITS.Essence.StateOrder">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
                     <READONLY />
                   </FIELD>
                 </FIELDS>

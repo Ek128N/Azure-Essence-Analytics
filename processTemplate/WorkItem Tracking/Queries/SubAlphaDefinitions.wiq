@@ -20,7 +20,7 @@
                   OR [Target].[System.WorkItemType] = 'EssenceCheckpoint'
               ) 
           )
-    ORDER BY [System.Id]
+    ORDER BY [HITS.Essence.StateOrder]
     MODE (Recursive)
   </Wiql>
 </WorkItemQuery>

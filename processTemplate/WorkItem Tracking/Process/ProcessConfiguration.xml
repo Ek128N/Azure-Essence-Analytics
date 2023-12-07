@@ -101,7 +101,7 @@
     </PortfolioBacklog>
     <PortfolioBacklog category="HITS.EssenceCheckpointCategory" parent="HITS.EssenceStateCategory" pluralName="Checkpoints" singularName="Checkpoint"  workItemCountLimit="1000" >
         <States>
-          <State value="New" type="Proposed" />
+          <State value="Active" type="Proposed" />
           <State value="Closed" type="Complete" />
         </States>
         <Columns>
@@ -204,7 +204,8 @@
     <WorkItemColor primary="FF0098C7" secondary="FFFCEECF" name="Essence Checkpoint" />
     <WorkItemColor primary="FF0DC200" secondary="FFFCEECF" name="Essence AlphaCriterion" />
     <WorkItemColor primary="FFE0C302" secondary="FFFCEECF" name="Essence Activity" />
-    <WorkItemColor primary="FF68C732" secondary="FFFCEECF" name="Essence WorkProduct" />
+    <WorkItemColor primary="FF68C732" secondary="FFFCEECF" name="Essence WorkProductDefinition" />
+    <WorkItemColor primary="FF68FF32" secondary="FFFCEECF" name="Essence WorkProduct" />
     <WorkItemColor primary="FFA8024A" secondary="FFFCEECF" name="Essence LevelOfDetail" />
     <WorkItemColor primary="FFAC63D6" secondary="FFFCEECF" name="Essence WorkProductCriterion" />
   </WorkItemColors>

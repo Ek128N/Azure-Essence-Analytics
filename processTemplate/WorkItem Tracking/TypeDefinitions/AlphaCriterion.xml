@@ -1,31 +1,38 @@
 <witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
        <WORKITEMTYPE name="Essence AlphaCriterion" refname="HITS.Essence.AlphaCriterion">
           <FIELDS>
+            <FIELD name="Title" refname="System.Title" type="String">
+              <REQUIRED />
+            </FIELD>
             <FIELD name="Type" refname="HITS.Essence.CriterionType" type="String">
               <ALLOWEDVALUES>
                 <LISTITEM value="0" />
                 <LISTITEM value="1" />
               </ALLOWEDVALUES>
+              <REQUIRED />
             </FIELD>
-            <FIELD name="IsPartial" refname="HITS.Essence.CriterionIsPartial" type="Boolean" />
-            <FIELD name="Minimal" refname="HITS.Essence.CriterionMinimal" type="Integer" />
+            <FIELD name="IsPartial" refname="HITS.Essence.CriterionIsPartial" type="Boolean">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Minimal" refname="HITS.Essence.CriterionMinimal" type="Integer">
+              <REQUIRED />
+            </FIELD>
           </FIELDS> 
           <WORKFLOW>
             <STATES>
-              <STATE value="New" />
-              <STATE value="Locked">
+              <STATE value="New">
                 <FIELDS>
                   <FIELD refname="System.Title">
-                    <READONLY />
+                    <FROZEN />
                   </FIELD>
                   <FIELD refname="HITS.Essence.CriterionType">
-                    <READONLY />
+                    <FROZEN />
                   </FIELD>
                   <FIELD refname="HITS.Essence.CriterionIsPartial">
-                    <READONLY />
+                    <FROZEN />
                   </FIELD>
                   <FIELD refname="HITS.Essence.CriterionMinimal">
-                    <READONLY />
+                    <FROZEN />
                   </FIELD>
                 </FIELDS>
               </STATE>
@@ -34,11 +41,6 @@
               <TRANSITION from="" to="New">
                 <REASONS>
                   <DEFAULTREASON value="Created" />
-                </REASONS>
-              </TRANSITION>
-              <TRANSITION from="New" to="Locked">
-                <REASONS>
-                  <DEFAULTREASON value="Locked" />
                 </REASONS>
               </TRANSITION>
             </TRANSITIONS>

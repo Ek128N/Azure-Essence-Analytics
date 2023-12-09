@@ -73,6 +73,7 @@
         <QueryFolder name="Essence">
           <Query name="Alphas" fileName="WorkItem Tracking\Queries\Alphas.wiq" />
           <Query name="SubAlphaDefinitions" fileName="WorkItem Tracking\Queries\SubAlphaDefinitions.wiq" />
+          <Query name="WorkProductDefinitions" fileName="WorkItem Tracking\Queries\WorkProductDefinitions.wiq" />
         </QueryFolder>
         <Query name="My Bugs" fileName="WorkItem Tracking\Queries\MyBugs.wiq" />
         <Query name="My Tasks" fileName="WorkItem Tracking\Queries\MyTasks.wiq" />

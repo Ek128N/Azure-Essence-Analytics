@@ -28,7 +28,7 @@ function clearWorkItems() {
 export async function createWorkItems(dataCollection: [JsonInputTemplate], projectData: ProjectData) {
 
     const alphaName: string = "Essence Alpha";
-    const subAlphaDefinition: string = "Essence SubAlphaDefinition";
+    const subAlphaDefinition: string = "Essence SubAlpha";
 
     async function createAlphas(alphas: [Alpha] | undefined, alphaContainments: [AlphaContainment] | undefined): Promise<[Alpha] | undefined> {
 
@@ -87,21 +87,24 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                         value: alphaContainment!.lowerBound
                     });
 
-                    let normalValue=CreateRequestBodyWIObject({path:"/fields/Normal Value",value:alphaContainment?.normalValue});
+                    let normalValue = CreateRequestBodyWIObject({
+                        path: "/fields/Normal Value",
+                        value: alphaContainment?.normalValue
+                    });
                     let upperBound = CreateRequestBodyWIObject({
                         path: "/fields/Upper Bound",
                         value: alphaContainment!.upperBound
                     });
 
 
-                    bodyRequest.push(parentReference, lowerBound,normalValue, upperBound)
+                    bodyRequest.push(parentReference, lowerBound, normalValue, upperBound)
 
                 }
 
                 //console.log(bodyRequest);
 
 
-                alpha.WIId = await CreateWIFetch( bodyRequest, WITName)
+                alpha.WIId = await CreateWIFetch(bodyRequest, WITName)
 
                 alphasLeft--;
 
@@ -119,8 +122,8 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
         console.log("create states")
         for (let state of states) {
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: `${state.name}`});
-            let descriptionValue=state.description;
-            if(descriptionValue==='')descriptionValue="empty description"
+            let descriptionValue = state.description;
+            if (descriptionValue === '') descriptionValue = "empty description"
             let description = CreateRequestBodyWIObject({
                 path: "/fields/Description",
                 value: `${descriptionValue}`
@@ -151,7 +154,7 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
 
             //console.log(bodyRequest);
 
-            state.WIId = await CreateWIFetch( bodyRequest, stateName);
+            state.WIId = await CreateWIFetch(bodyRequest, stateName);
             //Create and save WIId
 
         }
@@ -159,63 +162,68 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
     }
 
 
-
-
-    async function createCheckpoints(checkpoints: [Checkpoint] | undefined, states: [State] | undefined) {
-        if (checkpoints === undefined || states === undefined) return;
+    async function createCheckpoints(checkpoints: [Checkpoint] | undefined, states: [State] | undefined, levelOfDetails: [LevelOfDetail] | undefined) {
+        if (checkpoints === undefined || states === undefined || levelOfDetails === undefined) return;
 
 
         let checkpointName: string = "Essence Checkpoint"
         //detailId - stateId
-        for (let checkpoint of checkpoints){
-            let parentState = states.find(s => s.id === checkpoint.detailId);
-           if (parentState==null){continue;}//TODO:Fix it :bind tol levelOfDetails
-            // find it in level of Details
+        for (let checkpoint of checkpoints) {
+            let message: string = "state";
+            let parentState: State | undefined | LevelOfDetail = states.find(s => s.id === checkpoint.detailId);
+            if (parentState == null) {
+                parentState = levelOfDetails.find(l => l.id === checkpoint.detailId);
+                message = "levelOfDetail"
+            }
 
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: `${checkpoint.name}`});
-            let descriptionValue=checkpoint.description;
-            if(descriptionValue==='')descriptionValue="empty description"
+            let descriptionValue = checkpoint.description;
+            if (descriptionValue === '') descriptionValue = "empty description"
             let description = CreateRequestBodyWIObject({
                 path: "/fields/Description",
                 value: `${descriptionValue}`
             })
             let order = CreateRequestBodyWIObject({path: "/fields/Order", value: checkpoint.order});
-            let degreeOfEvidenceValue=CreateRequestBodyWIObject({path:"/fields/DegreeOfEvidence Value",value:checkpoint.degreeOfEvidenceEnumValueManagerOpinion})
+            let degreeOfEvidenceValue = CreateRequestBodyWIObject({
+                path: "/fields/DegreeOfEvidence Value",
+                value: checkpoint.degreeOfEvidenceEnumValueManagerOpinion
+            })
 
-            let stateReferenceValue: WorkItemRelation = {
+            let
+                ReferenceValue: WorkItemRelation = {
                 attributes: {
                     isLocked: false,
-                    comment: `${checkpoint.name} is a checkpoint of state ${parentState?.name}`,
+                    comment: `${checkpoint.name} is a checkpoint of ${message} ${parentState?.name}`,
                     name: 'Parent'
                 },
                 rel: 'System.LinkTypes.Hierarchy-Reverse',
                 url: `${projectData.vssRestClientOptions.rootPath}${projectData.projectId}/_apis/wit/wokrItems/${parentState?.WIId}`
 
             };
-            let stateReference = CreateRequestBodyWIObject({
+            let Reference = CreateRequestBodyWIObject({
                 path: "/relations/System.LinkTypes.Hierarchy-Reverse",
-                value: stateReferenceValue
+                value: ReferenceValue
             })
 
-            let bodyRequest: WIRequestBodyData[] = [title, description, order, stateReference,degreeOfEvidenceValue];
-            checkpoint.WIId=await CreateWIFetch( bodyRequest, checkpointName);
+            let bodyRequest: WIRequestBodyData[] = [title, description, order, Reference, degreeOfEvidenceValue];
+            checkpoint.WIId = await CreateWIFetch(bodyRequest, checkpointName);
 
         }
         return checkpoints;
     }
 
     async function createWorkProducts(workProducts: [WorkProduct] | undefined, workProductManifests: [WorkProductManifest] | undefined, alphas: [Alpha] | undefined) {
-        if (workProducts === undefined || workProductManifests === undefined||alphas===undefined) return;
-        let workProductName="Essence WorkProduct"
+        if (workProducts === undefined || workProductManifests === undefined || alphas === undefined) return;
+        let workProductName = "Essence WorkProduct"
 
-        for( let workProduct of workProducts){
+        for (let workProduct of workProducts) {
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: `${workProduct.name}`});
             let description = CreateRequestBodyWIObject({
                 path: "/fields/Description",
                 value: `${workProduct.description}`
             })
 
-            let workProductManifest= workProductManifests.find(w=>w.workProductId===workProduct.id);
+            let workProductManifest = workProductManifests.find(w => w.workProductId === workProduct.id);
 
             let lowerBound = CreateRequestBodyWIObject({
                 path: "/fields/WorkProduct Lower Bound",
@@ -242,9 +250,9 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 value: alphaReferenceValue
             })
 
-            let bodyRequest: WIRequestBodyData[] = [title, description,lowerBound, upperBound, alphaReference];
+            let bodyRequest: WIRequestBodyData[] = [title, description, lowerBound, upperBound, alphaReference];
 
-            workProduct.WIId=await CreateWIFetch( bodyRequest, workProductName);
+            workProduct.WIId = await CreateWIFetch(bodyRequest, workProductName);
 
         }
 
@@ -252,16 +260,16 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
     }
 
     async function createActivities(activities: [Activity] | undefined) {
-        if (activities === undefined) return ;
-        let activityName="Essence Activity"
-        for (let activity of activities){
+        if (activities === undefined) return;
+        let activityName = "Essence Activity"
+        for (let activity of activities) {
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: `${activity.name}`});
             let description = CreateRequestBodyWIObject({
                 path: "/fields/Description",
                 value: `${activity.description}`
             })
             let bodyRequest: WIRequestBodyData[] = [title, description];
-            activity.WIId= await CreateWIFetch( bodyRequest, activityName);
+            activity.WIId = await CreateWIFetch(bodyRequest, activityName);
         }
 
 
@@ -269,15 +277,15 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
     }
 
     async function createLevelOfDetails(levelOfDetails: [LevelOfDetail] | undefined, workProducts: [WorkProduct] | undefined) {
-        if (levelOfDetails === undefined||workProducts === undefined) return ;
-        let levelOfDetailsName="Essence LevelOfDetail"
-        for(let levelOfDetail of levelOfDetails){
+        if (levelOfDetails === undefined || workProducts === undefined) return;
+        let levelOfDetailsName = "Essence LevelOfDetail"
+        for (let levelOfDetail of levelOfDetails) {
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: `${levelOfDetail.name}`});
             let description = CreateRequestBodyWIObject({
                 path: "/fields/Description",
                 value: `${levelOfDetail.description}`
             })
-            let order=CreateRequestBodyWIObject({
+            let order = CreateRequestBodyWIObject({
                 path: "/fields/LOD Order",
                 value: `${levelOfDetail.order}`
             })
@@ -298,24 +306,33 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 value: WorkProductReferenceValue
             })
 
-            let bodyRequest: WIRequestBodyData[] = [title, description,order, alphaReference];
+            let bodyRequest: WIRequestBodyData[] = [title, description, order, alphaReference];
 
-            levelOfDetail.WIId=await CreateWIFetch( bodyRequest, levelOfDetailsName);
+            levelOfDetail.WIId = await CreateWIFetch(bodyRequest, levelOfDetailsName);
         }
 
         return levelOfDetails;
     }
 
     async function createWorkProductCriterions(workProductCriterions: [WorkProductCriterion] | undefined, activities: [Activity] | undefined, levelOfDetails: [LevelOfDetail] | undefined) {
-        if(workProductCriterions === undefined||activities === undefined||levelOfDetails === undefined) return ;
-        let workProductCriterionsName="Essence WorkProductCriterion";
-        for(let workProductCriterion of workProductCriterions){
+        if (workProductCriterions === undefined || activities === undefined || levelOfDetails === undefined) return;
+        let workProductCriterionsName = "Essence WorkProductCriterion";
+        for (let workProductCriterion of workProductCriterions) {
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: 'workProductCriterion'});
-            let type=CreateRequestBodyWIObject({path: "/fields/Type", value: `${workProductCriterion.criterionTypeEnumValue}`});
-            let partial=CreateRequestBodyWIObject({path: "/fields/IsPartial", value: `${workProductCriterion.partial}`});
-            let minimal=CreateRequestBodyWIObject({path: "/fields/Minimal", value: `${workProductCriterion.minimal}`});
+            let type = CreateRequestBodyWIObject({
+                path: "/fields/Type",
+                value: `${workProductCriterion.criterionTypeEnumValue}`
+            });
+            let partial = CreateRequestBodyWIObject({
+                path: "/fields/IsPartial",
+                value: `${workProductCriterion.partial}`
+            });
+            let minimal = CreateRequestBodyWIObject({
+                path: "/fields/Minimal",
+                value: `${workProductCriterion.minimal}`
+            });
 
-            let duplicateLevelOfDetail=levelOfDetails.find(l=>l.id===workProductCriterion.levelOfDetailId);
+            let duplicateLevelOfDetail = levelOfDetails.find(l => l.id === workProductCriterion.levelOfDetailId);
             let levelOfDetailReferenceValue: WorkItemRelation = {
                 attributes: {
                     isLocked: false,
@@ -326,28 +343,28 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 url: `${projectData.vssRestClientOptions.rootPath}${projectData.projectId}/_apis/wit/wokrItems/${duplicateLevelOfDetail?.WIId}`
 
             };
-            let levelOfDetailReference= CreateRequestBodyWIObject({
+            let levelOfDetailReference = CreateRequestBodyWIObject({
                 path: "/relations/System.LinkTypes.Duplicate-Reverse",
                 value: levelOfDetailReferenceValue
             });
 
-            let parentActivity=activities.find(a=>a.id===workProductCriterion.activityId);
-            let activityReferenceValue:WorkItemRelation= {
+            let parentActivity = activities.find(a => a.id === workProductCriterion.activityId);
+            let activityReferenceValue: WorkItemRelation = {
                 attributes: {
                     isLocked: false,
-                        comment: `workProductCriterion is a child of Activity ${parentActivity?.name}`,
-                        name: 'Parent'
+                    comment: `workProductCriterion is a child of Activity ${parentActivity?.name}`,
+                    name: 'Parent'
                 },
                 rel: 'System.LinkTypes.Hierarchy-Reverse',
-                    url: `${projectData.vssRestClientOptions.rootPath}${projectData.projectId}/_apis/wit/wokrItems/${parentActivity?.WIId}`
+                url: `${projectData.vssRestClientOptions.rootPath}${projectData.projectId}/_apis/wit/wokrItems/${parentActivity?.WIId}`
 
             };
-            let activityReference= CreateRequestBodyWIObject({
+            let activityReference = CreateRequestBodyWIObject({
                 path: "/relations/System.LinkTypes.Hierarchy-Reverse",
                 value: activityReferenceValue
             });
-            let bodyRequest: WIRequestBodyData[] = [title, type,partial, minimal,levelOfDetailReference,activityReference];
-            workProductCriterion.WIId=await CreateWIFetch( bodyRequest, workProductCriterionsName);
+            let bodyRequest: WIRequestBodyData[] = [title, type, partial, minimal, levelOfDetailReference, activityReference];
+            workProductCriterion.WIId = await CreateWIFetch(bodyRequest, workProductCriterionsName);
         }
 
         return workProductCriterions;
@@ -355,15 +372,18 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
 
 
     async function createAlphaCriterions(alphaCriterions: [AlphaCriterion] | undefined, activities: [Activity] | undefined, states: [State] | undefined) {
-        if(alphaCriterions === undefined||activities === undefined||states === undefined) return ;
-        let AlphaCriterionName="Essence AlphaCriterion";
-        for(let alphaCriterion of alphaCriterions){
+        if (alphaCriterions === undefined || activities === undefined || states === undefined) return;
+        let AlphaCriterionName = "Essence AlphaCriterion";
+        for (let alphaCriterion of alphaCriterions) {
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: 'alphaCriterion'});
-            let type=CreateRequestBodyWIObject({path: "/fields/Type", value: `${alphaCriterion.criterionTypeEnumValue}`});
-            let partial=CreateRequestBodyWIObject({path: "/fields/IsPartial", value: `${alphaCriterion.partial}`});
-            let minimal=CreateRequestBodyWIObject({path: "/fields/Minimal", value: `${alphaCriterion.minimal}`});
+            let type = CreateRequestBodyWIObject({
+                path: "/fields/Type",
+                value: `${alphaCriterion.criterionTypeEnumValue}`
+            });
+            let partial = CreateRequestBodyWIObject({path: "/fields/IsPartial", value: `${alphaCriterion.partial}`});
+            let minimal = CreateRequestBodyWIObject({path: "/fields/Minimal", value: `${alphaCriterion.minimal}`});
 
-            let duplicateState=states.find(s=>s.id===alphaCriterion.stateId);
+            let duplicateState = states.find(s => s.id === alphaCriterion.stateId);
             let stateReferenceValue: WorkItemRelation = {
                 attributes: {
                     isLocked: false,
@@ -374,13 +394,13 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 url: `${projectData.vssRestClientOptions.rootPath}${projectData.projectId}/_apis/wit/wokrItems/${duplicateState?.WIId}`
 
             };
-            let stateReference= CreateRequestBodyWIObject({
+            let stateReference = CreateRequestBodyWIObject({
                 path: "/relations/System.LinkTypes.Duplicate-Reverse",
                 value: stateReferenceValue
             });
 
-            let parentActivity=activities.find(a=>a.id===alphaCriterion.activityId);
-            let activityReferenceValue:WorkItemRelation= {
+            let parentActivity = activities.find(a => a.id === alphaCriterion.activityId);
+            let activityReferenceValue: WorkItemRelation = {
                 attributes: {
                     isLocked: false,
                     comment: `alphaCriterions is a child of Activity ${parentActivity?.name}`,
@@ -390,12 +410,12 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 url: `${projectData.vssRestClientOptions.rootPath}${projectData.projectId}/_apis/wit/wokrItems/${parentActivity?.WIId}`
 
             };
-            let activityReference= CreateRequestBodyWIObject({
+            let activityReference = CreateRequestBodyWIObject({
                 path: "/relations/System.LinkTypes.Hierarchy-Reverse",
                 value: activityReferenceValue
             });
-            let bodyRequest: WIRequestBodyData[] = [title, type,partial, minimal,stateReference,activityReference];
-            alphaCriterion.WIId=await CreateWIFetch( bodyRequest, AlphaCriterionName);
+            let bodyRequest: WIRequestBodyData[] = [title, type, partial, minimal, stateReference, activityReference];
+            alphaCriterion.WIId = await CreateWIFetch(bodyRequest, AlphaCriterionName);
 
         }
         return alphaCriterions;
@@ -406,24 +426,24 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
         console.log("alphas created")
         data.states = await createStates(data.states, data.alphas)
         console.log("states created")
-        data.checkpoints=await createCheckpoints(data.checkpoints,data.states);
-        console.log("checkpoints created")
-        data.workProducts = await createWorkProducts(data.workProducts,data.workProductManifests,data.alphas);
+        data.workProducts = await createWorkProducts(data.workProducts, data.workProductManifests, data.alphas);
         console.log("WorkProductsCreated")
-        data.activities=await createActivities(data.activities)
+        data.activities = await createActivities(data.activities)
         console.log("Activities created")
-        data.levelOfDetails=await createLevelOfDetails(data.levelOfDetails, data.workProducts);
+        data.levelOfDetails = await createLevelOfDetails(data.levelOfDetails, data.workProducts);
         console.log("levelOfDetails created")
         //EssenceWorkProductCriterion
-        data.workProductCriterions = await createWorkProductCriterions(data.workProductCriterions,data.activities,data.levelOfDetails);
+        data.workProductCriterions = await createWorkProductCriterions(data.workProductCriterions, data.activities, data.levelOfDetails);
         console.log("EssenceWorkProductCriterion created")
         //EssenceAlphaCriterion.
-        data.alphaCriterions=await createAlphaCriterions(data.alphaCriterions,data.activities,data.states);
+        data.alphaCriterions = await createAlphaCriterions(data.alphaCriterions, data.activities, data.states);
         console.log("EssenceAlphaCriterion created")
+        data.checkpoints = await createCheckpoints(data.checkpoints, data.states, data.levelOfDetails);
+        console.log("checkpoints created")
 
     }
 
-    async function CreateWIFetch( bodyRequest: WIRequestBodyData[], WITName: string) {
+    async function CreateWIFetch(bodyRequest: WIRequestBodyData[], WITName: string) {
         let WIId = "-1";
         await AzureFetch({
             path: `${projectData.projectId}/_apis/wit/workitems/$${WITName}`,

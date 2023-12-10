@@ -2,29 +2,16 @@
        <WORKITEMTYPE name="Essence WorkProduct" refname="HITS.Essence.WorkProduct">
        <DESCRIPTION>A piece of work that should be done to complete the work.</DESCRIPTION>
           <FIELDS>
-            <FIELD name="Description" refname="System.Description" type="HTML" />
-            <FIELD name="WorkProduct Lower Bound" refname="HITS.Essence.WorkProductLowerBound" type="Integer" />
-            <FIELD name="WorkProduct Upper Bound" refname="HITS.Essence.WorkProductUpperBound" type="Integer" />
+            <FIELD name="Title" refname="System.Title" type="String">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Description" refname="System.Description" type="HTML">
+              <REQUIRED />
+            </FIELD>
           </FIELDS> 
           <WORKFLOW>
             <STATES>
               <STATE value="New" />
-              <STATE value="Locked">
-                <FIELDS>
-                  <FIELD refname="System.Title">
-                    <READONLY />
-                  </FIELD>
-                  <FIELD refname="System.Description">
-                    <READONLY />
-                  </FIELD>
-                  <FIELD refname="HITS.Essence.WorkProductLowerBound">
-                    <READONLY />
-                  </FIELD>
-                  <FIELD refname="HITS.Essence.WorkProductUpperBound">
-                    <READONLY />
-                  </FIELD>
-                </FIELDS>
-              </STATE>
             </STATES>
             <TRANSITIONS>
               <TRANSITION from="" to="New">
@@ -32,18 +19,11 @@
                   <DEFAULTREASON value="Created" />
                 </REASONS>
               </TRANSITION>
-              <TRANSITION from="New" to="Locked">
-                <REASONS>
-                  <DEFAULTREASON value="Locked" />
-                </REASONS>
-              </TRANSITION>
             </TRANSITIONS>
           </WORKFLOW>
           <FORM>
             <Layout>
               <Control FieldName="System.Description" Type="FieldControl" Label="Description" />
-              <Control FieldName="HITS.Essence.WorkProductLowerBound" Type="FieldControl" Label="Lower Bound" />
-              <Control FieldName="HITS.Essence.WorkProductUpperBound" Type="FieldControl" Label="Upper Bound" />
             </Layout>
           </FORM>
        </WORKITEMTYPE>  

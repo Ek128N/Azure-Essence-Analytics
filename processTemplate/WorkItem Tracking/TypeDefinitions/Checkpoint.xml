@@ -2,34 +2,93 @@
        <WORKITEMTYPE name="Essence Checkpoint" refname="HITS.Essence.Checkpoint">  
           <DESCRIPTION>A checkpoint is an item in a check list that needs to be verified in a state.</DESCRIPTION>
           <FIELDS>
-            <FIELD name="Title" refname="System.Title" type="String" />
+            <FIELD name="Title" refname="System.Title" type="String">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Description" refname="System.Description" type="HTML">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Order" refname="HITS.Essence.StateOrder" type="Integer">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="DegreeOfEvidence Value" refname="HITS.Essence.DegreeOfEvidenceValue" type="String">
+              <ALLOWEDVALUES>
+                <LISTITEM value="0" />
+                <LISTITEM value="1" />
+                <LISTITEM value="2" />
+              </ALLOWEDVALUES>
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Special Id" refname="HITS.Essence.SpecialId" type="String" />
+            <FIELD name="Stack Rank" refname="Microsoft.VSTS.Common.StackRank" type="Double">
+              <HELPTEXT>Work first on items with lower-valued stack rank.</HELPTEXT>
+            </FIELD>
           </FIELDS> 
           <WORKFLOW>
             <STATES>
-              <STATE value="New" />
-              <STATE value="Locked">
+              <STATE value="Active">
                 <FIELDS>
                   <FIELD refname="System.Title">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.StateOrder">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.DegreeOfEvidenceValue">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
+                    <FROZEN />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+              <STATE value="Closed">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.StateOrder">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.DegreeOfEvidenceValue">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
                     <READONLY />
                   </FIELD>
                 </FIELDS>
               </STATE>
             </STATES>
             <TRANSITIONS>
-              <TRANSITION from="" to="New">
+              <TRANSITION from="" to="Active">
                 <REASONS>
                   <DEFAULTREASON value="Created" />
                 </REASONS>
               </TRANSITION>
-              <TRANSITION from="New" to="Locked">
+              <TRANSITION from="Active" to="Closed">
                 <REASONS>
-                  <DEFAULTREASON value="Locked" />
+                  <DEFAULTREASON value="Closed" />
+                </REASONS>
+              </TRANSITION>
+              <TRANSITION from="Closed" to="Active">
+                <REASONS>
+                  <DEFAULTREASON value="Unclosed" />
                 </REASONS>
               </TRANSITION>
             </TRANSITIONS>
           </WORKFLOW>
           <FORM>
-            <Layout />
+            <Layout>
+              <Control FieldName="System.Description" Type="FieldControl" Label="Description" />
+              <Control FieldName="HITS.Essence.StateOrder" Type="FieldControl" Label="Order" />
+              <Control FieldName="HITS.Essence.DegreeOfEvidenceValue" Type="FieldControl" Label="DegreeOfEvidence Manager Opinion" />
+            </Layout>
           </FORM>
        </WORKITEMTYPE>  
 </witd:WITD>  

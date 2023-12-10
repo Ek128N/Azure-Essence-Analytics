@@ -86,15 +86,15 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                         path: "/fields/Lower Bound",
                         value: alphaContainment!.lowerBound
                     });
-                    //TODO: uncomment when field would be added, and add to bodyRequest.
-                    //let normalValue=CreateRequestBodyWIObject({path:"/fields/Normal Value",value:alphaContainment?.normalValue});
+
+                    let normalValue=CreateRequestBodyWIObject({path:"/fields/Normal Value",value:alphaContainment?.normalValue});
                     let upperBound = CreateRequestBodyWIObject({
                         path: "/fields/Upper Bound",
                         value: alphaContainment!.upperBound
                     });
 
 
-                    bodyRequest.push(parentReference, lowerBound, upperBound)
+                    bodyRequest.push(parentReference, lowerBound,normalValue, upperBound)
 
                 }
 
@@ -169,8 +169,8 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
         //detailId - stateId
         for (let checkpoint of checkpoints){
             let parentState = states.find(s => s.id === checkpoint.detailId);
-            if (parentState==null){continue;}
-
+           if (parentState==null){continue;}//TODO:Fix it :bind tol levelOfDetails
+            // find it in level of Details
 
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: `${checkpoint.name}`});
             let descriptionValue=checkpoint.description;
@@ -180,6 +180,7 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 value: `${descriptionValue}`
             })
             let order = CreateRequestBodyWIObject({path: "/fields/Order", value: checkpoint.order});
+            let degreeOfEvidenceValue=CreateRequestBodyWIObject({path:"/fields/DegreeOfEvidence Value",value:checkpoint.degreeOfEvidenceEnumValueManagerOpinion})
 
             let stateReferenceValue: WorkItemRelation = {
                 attributes: {
@@ -196,7 +197,7 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 value: stateReferenceValue
             })
 
-            let bodyRequest: WIRequestBodyData[] = [title, description, order, stateReference];
+            let bodyRequest: WIRequestBodyData[] = [title, description, order, stateReference,degreeOfEvidenceValue];
             checkpoint.WIId=await CreateWIFetch( bodyRequest, checkpointName);
 
         }

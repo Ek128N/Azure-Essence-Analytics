@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <cat:CATEGORIES xmlns:cat="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/categories">
   <!-- Usage: for resilience in Test system. Even if WITs have different name, they can be referred to by the category -->
+  <CATEGORY name="Essence Alpha Category" refname="HITS.EssenceAlphaCategory">
+    <DEFAULTWORKITEMTYPE name="Essence Alpha" />
+  </CATEGORY>
+  <CATEGORY name="Essence State Category" refname="HITS.EssenceStateCategory">
+    <DEFAULTWORKITEMTYPE name="Essence State" />
+  </CATEGORY>
+  <CATEGORY name="Essence Checkpoint Category" refname="HITS.EssenceCheckpointCategory">
+    <DEFAULTWORKITEMTYPE name="Essence Checkpoint" />
+  </CATEGORY>
   <CATEGORY name="Bug Category" refname="Microsoft.BugCategory">
     <DEFAULTWORKITEMTYPE name="Bug" />
   </CATEGORY>

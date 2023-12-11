@@ -1,0 +1,60 @@
+<witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
+       <WORKITEMTYPE name="Essence WorkProductDefinition" refname="HITS.Essence.WorkProductDefinition">
+       <DESCRIPTION>A piece of work that should be done to complete the work.</DESCRIPTION>
+          <FIELDS>
+            <FIELD name="Title" refname="System.Title" type="String">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Description" refname="System.Description" type="HTML">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Lower Bound" refname="HITS.Essence.AlphaLowerBound" type="Integer">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Upper Bound" refname="HITS.Essence.AlphaUpperBound" type="Integer">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Normal Value" refname="HITS.Essence.NormalValue" type="Integer">
+              <REQUIRED />
+            </FIELD>
+          </FIELDS> 
+          <WORKFLOW>
+            <STATES>
+              <STATE value="New">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.AlphaLowerBound">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.AlphaUpperBound">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.NormalValue">
+                    <FROZEN />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+            </STATES>
+            <TRANSITIONS>
+              <TRANSITION from="" to="New">
+                <REASONS>
+                  <DEFAULTREASON value="Created" />
+                </REASONS>
+              </TRANSITION>
+            </TRANSITIONS>
+          </WORKFLOW>
+          <FORM>
+            <Layout>
+              <Control FieldName="System.Description" Type="FieldControl" Label="Description" />
+              <Control FieldName="HITS.Essence.AlphaLowerBound" Type="FieldControl" Label="Lower Bound" />
+              <Control FieldName="HITS.Essence.AlphaUpperBound" Type="FieldControl" Label="Upper Bound" />
+              <Control FieldName="HITS.Essence.NormalValue" Type="FieldControl" Label="Normal Value" />
+            </Layout>
+          </FORM>
+       </WORKITEMTYPE>  
+</witd:WITD>  

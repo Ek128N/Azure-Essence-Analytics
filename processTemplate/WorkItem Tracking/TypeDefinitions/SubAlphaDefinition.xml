@@ -1,20 +1,19 @@
 <witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
-       <WORKITEMTYPE name="Essence WorkProductCriterion" refname="HITS.Essence.WorkProductCriterion">
+       <WORKITEMTYPE name="Essence SubAlphaDefinition" refname="HITS.Essence.SubAlphaDefinition">  
           <FIELDS>
             <FIELD name="Title" refname="System.Title" type="String">
               <REQUIRED />
             </FIELD>
-            <FIELD name="Type" refname="HITS.Essence.CriterionType" type="String">
-              <ALLOWEDVALUES>
-                <LISTITEM value="0" />
-                <LISTITEM value="1" />
-              </ALLOWEDVALUES>
+            <FIELD name="Description" refname="System.Description" type="HTML">
               <REQUIRED />
             </FIELD>
-            <FIELD name="IsPartial" refname="HITS.Essence.CriterionIsPartial" type="Boolean">
+            <FIELD name="Lower Bound" refname="HITS.Essence.AlphaLowerBound" type="Integer">
               <REQUIRED />
             </FIELD>
-            <FIELD name="Minimal" refname="HITS.Essence.CriterionMinimal" type="Integer">
+            <FIELD name="Upper Bound" refname="HITS.Essence.AlphaUpperBound" type="Integer">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Normal Value" refname="HITS.Essence.NormalValue" type="Integer">
               <REQUIRED />
             </FIELD>
           </FIELDS> 
@@ -25,13 +24,16 @@
                   <FIELD refname="System.Title">
                     <FROZEN />
                   </FIELD>
-                  <FIELD refname="HITS.Essence.CriterionType">
+                  <FIELD refname="System.Description">
                     <FROZEN />
                   </FIELD>
-                  <FIELD refname="HITS.Essence.CriterionIsPartial">
+                  <FIELD refname="HITS.Essence.AlphaLowerBound">
                     <FROZEN />
                   </FIELD>
-                  <FIELD refname="HITS.Essence.CriterionMinimal">
+                  <FIELD refname="HITS.Essence.AlphaUpperBound">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.NormalValue">
                     <FROZEN />
                   </FIELD>
                 </FIELDS>
@@ -47,9 +49,10 @@
           </WORKFLOW>
           <FORM>
             <Layout>
-              <Control FieldName="HITS.Essence.CriterionType" Type="FieldControl" Label="Type"/>
-              <Control FieldName="HITS.Essence.CriterionIsPartial" Type="FieldControl" Label="Partial"/>
-              <Control FieldName="HITS.Essence.CriterionMinimal" Type="FieldControl" Label="Minimal"/>
+              <Control FieldName="System.Description" Type="FieldControl" Label="Description" />
+              <Control FieldName="HITS.Essence.AlphaLowerBound" Type="FieldControl" Label="Lower Bound" />
+              <Control FieldName="HITS.Essence.AlphaUpperBound" Type="FieldControl" Label="Upper Bound" />
+              <Control FieldName="HITS.Essence.NormalValue" Type="FieldControl" Label="Normal Value" />
             </Layout>
           </FORM>
        </WORKITEMTYPE>  

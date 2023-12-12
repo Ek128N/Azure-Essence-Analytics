@@ -25,7 +25,8 @@ export default function render(projectData:ProjectData): JSX.Element {
 
         if (file === undefined) {
             //File was not attached
-            throw new Error("File is undefined");
+            console.log("File is undefined");
+            return;
         }
 
         let reader = new FileReader();

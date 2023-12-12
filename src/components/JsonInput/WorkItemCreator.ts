@@ -12,6 +12,7 @@ import JsonInputTemplate, {
 import {AzureFetch} from "../../modules/AzureFetch";
 import {ProjectData} from "./JsonInput";
 import {WorkItemRelation} from "azure-devops-extension-api/WorkItemTracking";
+import {getKeywordSearchResults} from "azure-devops-ui/Filter";
 
 interface WIRequestBodyData {
     op?: string | null,
@@ -28,7 +29,7 @@ function clearWorkItems() {
 export async function createWorkItems(dataCollection: [JsonInputTemplate], projectData: ProjectData) {
 
     const alphaName: string = "Essence Alpha";
-    const subAlphaDefinition: string = "Essence SubAlpha";
+    const subAlphaDefinition: string = "Essence SubAlphaDefinition";
 
     async function createAlphas(alphas: [Alpha] | undefined, alphaContainments: [AlphaContainment] | undefined): Promise<[Alpha] | undefined> {
 
@@ -129,9 +130,6 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 value: `${descriptionValue}`
             })
             let order = CreateRequestBodyWIObject({path: "/fields/Order", value: state.order});
-            //TODO: add SpecialID field
-            //
-
 
             let parentAlpha = alphas.find(a => a.id === state.alphaId);
             let alphaReferenceValue: WorkItemRelation = {
@@ -151,6 +149,14 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
 
             let bodyRequest: WIRequestBodyData[] = [title, description, order, alphaReference];
 
+
+            if (state.specialId != null) {
+                let specialId = CreateRequestBodyWIObject({
+                    path: "/fields/HITS.Essence.SpecialId",
+                    value: state.specialId
+                })
+                bodyRequest.push(specialId);
+            }
 
             //console.log(bodyRequest);
 
@@ -191,15 +197,15 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
 
             let
                 ReferenceValue: WorkItemRelation = {
-                attributes: {
-                    isLocked: false,
-                    comment: `${checkpoint.name} is a checkpoint of ${message} ${parentState?.name}`,
-                    name: 'Parent'
-                },
-                rel: 'System.LinkTypes.Hierarchy-Reverse',
-                url: `${projectData.vssRestClientOptions.rootPath}${projectData.projectId}/_apis/wit/wokrItems/${parentState?.WIId}`
+                    attributes: {
+                        isLocked: false,
+                        comment: `${checkpoint.name} is a checkpoint of ${message} ${parentState?.name}`,
+                        name: 'Parent'
+                    },
+                    rel: 'System.LinkTypes.Hierarchy-Reverse',
+                    url: `${projectData.vssRestClientOptions.rootPath}${projectData.projectId}/_apis/wit/wokrItems/${parentState?.WIId}`
 
-            };
+                };
             let Reference = CreateRequestBodyWIObject({
                 path: "/relations/System.LinkTypes.Hierarchy-Reverse",
                 value: ReferenceValue
@@ -214,7 +220,7 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
 
     async function createWorkProducts(workProducts: [WorkProduct] | undefined, workProductManifests: [WorkProductManifest] | undefined, alphas: [Alpha] | undefined) {
         if (workProducts === undefined || workProductManifests === undefined || alphas === undefined) return;
-        let workProductName = "Essence WorkProduct"
+        let workProductName = "Essence WorkProductDefinition"
 
         for (let workProduct of workProducts) {
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: `${workProduct.name}`});
@@ -226,19 +232,23 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
             let workProductManifest = workProductManifests.find(w => w.workProductId === workProduct.id);
 
             let lowerBound = CreateRequestBodyWIObject({
-                path: "/fields/WorkProduct Lower Bound",
+                path: "/fields/Lower Bound",
                 value: workProductManifest!.lowerBound
             });
             let upperBound = CreateRequestBodyWIObject({
-                path: "/fields/WorkProduct Upper Bound",
+                path: "/fields/Upper Bound",
                 value: workProductManifest!.upperBound
             });
+            let normalValue=CreateRequestBodyWIObject({
+                path:"/fields/Normal Value",
+                value:workProductManifest!.normalValue
+            })
 
             let parentAlpha = alphas.find(a => a.id === workProductManifest?.alphaId);
             let alphaReferenceValue: WorkItemRelation = {
                 attributes: {
                     isLocked: false,
-                    comment: `${workProduct.name} is a workProduct of Alpha ${parentAlpha?.name}`,
+                    comment: `${workProduct.name} is a workProductDefinition of Alpha ${parentAlpha?.name}`,
                     name: 'Parent'
                 },
                 rel: 'System.LinkTypes.Hierarchy-Reverse',
@@ -250,7 +260,7 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 value: alphaReferenceValue
             })
 
-            let bodyRequest: WIRequestBodyData[] = [title, description, lowerBound, upperBound, alphaReference];
+            let bodyRequest: WIRequestBodyData[] = [title, description, lowerBound, upperBound, alphaReference,normalValue];
 
             workProduct.WIId = await CreateWIFetch(bodyRequest, workProductName);
 
@@ -286,7 +296,7 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                 value: `${levelOfDetail.description}`
             })
             let order = CreateRequestBodyWIObject({
-                path: "/fields/LOD Order",
+                path: "/fields/Order",
                 value: `${levelOfDetail.order}`
             })
 
@@ -294,7 +304,7 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
             let WorkProductReferenceValue: WorkItemRelation = {
                 attributes: {
                     isLocked: false,
-                    comment: `${levelOfDetail.name} is a workProduct of Alpha ${parentWorkProduct?.name}`,
+                    comment: `${levelOfDetail.name} is a LevelOfDetail of WorkProductDefinition ${parentWorkProduct?.name}`,
                     name: 'Parent'
                 },
                 rel: 'System.LinkTypes.Hierarchy-Reverse',

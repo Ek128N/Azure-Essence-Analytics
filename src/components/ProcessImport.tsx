@@ -12,7 +12,7 @@ interface IProps {
   vssRestClientOptions: IVssRestClientOptions
 }
 
-enum ImportStatus {
+export enum ImportStatus {
   NotStarted,
   Pending,
   Fail,

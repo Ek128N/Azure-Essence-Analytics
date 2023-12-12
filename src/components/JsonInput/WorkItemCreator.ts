@@ -27,7 +27,7 @@ function clearWorkItems() {
 
 
 export async function createWorkItems(dataCollection: [JsonInputTemplate], projectData: ProjectData) {
-
+    //TODO: Remove location param, and get there
     const alphaName: string = "Essence Alpha";
     const subAlphaDefinition: string = "Essence SubAlphaDefinition";
 
@@ -124,7 +124,7 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
         for (let state of states) {
             let title = CreateRequestBodyWIObject({path: "/fields/Title", value: `${state.name}`});
             let descriptionValue = state.description;
-            if (descriptionValue === '') descriptionValue = "empty description"
+            if (descriptionValue === '') descriptionValue = "empty description"//TODO:Fix it in some way
             let description = CreateRequestBodyWIObject({
                 path: "/fields/Description",
                 value: `${descriptionValue}`
@@ -218,7 +218,7 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
         return checkpoints;
     }
 
-    async function createWorkProducts(workProducts: [WorkProduct] | undefined, workProductManifests: [WorkProductManifest] | undefined, alphas: [Alpha] | undefined) {
+    async function createWorkProductDefinitions(workProducts: [WorkProduct] | undefined, workProductManifests: [WorkProductManifest] | undefined, alphas: [Alpha] | undefined) {
         if (workProducts === undefined || workProductManifests === undefined || alphas === undefined) return;
         let workProductName = "Essence WorkProductDefinition"
 
@@ -436,8 +436,8 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
         console.log("alphas created")
         data.states = await createStates(data.states, data.alphas)
         console.log("states created")
-        data.workProducts = await createWorkProducts(data.workProducts, data.workProductManifests, data.alphas);
-        console.log("WorkProductsCreated")
+        data.workProducts = await createWorkProductDefinitions(data.workProducts, data.workProductManifests, data.alphas);
+        console.log("WorkProductDefinitions created")
         data.activities = await createActivities(data.activities)
         console.log("Activities created")
         data.levelOfDetails = await createLevelOfDetails(data.levelOfDetails, data.workProducts);

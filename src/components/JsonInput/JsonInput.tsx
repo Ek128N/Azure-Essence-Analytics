@@ -2,18 +2,24 @@ import * as React from "react";
 import {JSX, useState} from "react";
 import {Button} from "azure-devops-ui/Button";
 import JsonInputTemplate from "../../modules/JsonInputTemplate";
-import * as SDK from "azure-devops-extension-sdk";
 import {createWorkItems} from "./WorkItemCreator";
 import {IVssRestClientOptions} from "azure-devops-extension-api";
+import {Spinner, SpinnerSize} from "azure-devops-ui/Spinner";
+import {Status, Statuses, StatusSize} from "azure-devops-ui/Status";
+import {ObservableValue} from "azure-devops-ui/Core/Observable";
+import {ImportStatus} from "../ProcessImport";
 
-export interface ProjectData{
-    projectId:string
-    vssRestClientOptions:IVssRestClientOptions,
+export interface ProjectData {
+    projectId: string
+    vssRestClientOptions: IVssRestClientOptions,
 }
 
 
-export default function render(projectData:ProjectData): JSX.Element {
+
+export default function render(projectData: ProjectData): JSX.Element {
     //PassDown ProjectID & Vss data
+
+    const [WICreationStatus, setWICreationStatus] = useState(Statuses.Waiting);
 
     const [jsonData, setJsonData] = useState<[JsonInputTemplate]>([new JsonInputTemplate()]);
 
@@ -50,13 +56,20 @@ export default function render(projectData:ProjectData): JSX.Element {
 
         }
 
-        createWorkItems(jsonData,projectData);
 
     }
+
     function CheckState() {
         console.log(jsonData);
     }
 
+    async function CreateWI() {
+        //start
+        setWICreationStatus(Statuses.Running);
+        await createWorkItems(jsonData, projectData);
+        //finish
+        setWICreationStatus(Statuses.Success);
+    }
 
 
     return (
@@ -67,12 +80,27 @@ export default function render(projectData:ProjectData): JSX.Element {
 
                 onClick={CheckState}
             />
-            <p>JsonInput or something else</p>
-            <input type="file" id="jsonInput" accept=".json"/>
+            <p>JsonInput</p>
+            <input type="file" id="jsonInput" onChange={ParseJson} accept=".json"/>
+           <div className="margin-top-16 flex-row">
             <Button
-                text="SubmitJson"
-                onClick={ParseJson}
+                text="Create WorkItems"
+                onClick={CreateWI}
+            />{WICreationStatus==Statuses.Running &&
+            <Spinner
+                size={SpinnerSize.medium}
+                className="margin-left-8"
             />
+           }
+               {WICreationStatus==Statuses.Success &&
+                   <Status
+                       {...Statuses.Success}
+                       key="success"
+                       size={StatusSize.l}
+                       className="flex-self-center margin-left-8"
+                   />
+               }
+           </div>
         </div>
 
     );

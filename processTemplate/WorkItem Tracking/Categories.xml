@@ -61,5 +61,21 @@
     <WORKITEMTYPE name="Shared Parameter" />
     <WORKITEMTYPE name="Test Plan" />
     <WORKITEMTYPE name="Test Suite" />
+    <WORKITEMTYPE name="Test Case" />
+    <WORKITEMTYPE name="Task" />
+    <WORKITEMTYPE name="User Story" />
+    <WORKITEMTYPE name="Feature" />
+    <WORKITEMTYPE name="Epic" />
+    <WORKITEMTYPE name="Bug" />
+    <WORKITEMTYPE name="Issue" />
+    <WORKITEMTYPE name="Essence Activity" />
+    <WORKITEMTYPE name="Essence Alpha" />
+    <WORKITEMTYPE name="Essence AlphaCriterion" />
+    <WORKITEMTYPE name="Essence Checkpoint" />
+    <WORKITEMTYPE name="Essence LevelOfDetail" />
+    <WORKITEMTYPE name="Essence State" />
+    <WORKITEMTYPE name="Essence SubAlphaDefinition" />
+    <WORKITEMTYPE name="Essence WorkProductDefinition" />
+    <WORKITEMTYPE name="Essence WorkProductCriterion" />
   </CATEGORY>
 </cat:CATEGORIES>

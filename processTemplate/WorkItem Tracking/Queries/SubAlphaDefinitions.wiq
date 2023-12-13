@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkItemQuery Version="1">
+  <Wiql>
+    SELECT [System.Id],
+           [System.State], 
+           [System.Title] 
+      FROM WorkitemLinks 
+     WHERE
+          (
+            [Source].[System.TeamProject] = @project
+            AND [Source].[System.WorkItemType] = 'Essence SubAlphaDefinition'
+          )
+          AND (
+              [System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward'
+          )
+          AND (
+              [Target].[System.TeamProject] = @project
+              AND (
+                  [Target].[System.WorkItemType] = 'Essence State'
+                  OR [Target].[System.WorkItemType] = 'Essence Checkpoint'
+              ) 
+          )
+    ORDER BY [HITS.Essence.StateOrder]
+    MODE (Recursive)
+  </Wiql>
+</WorkItemQuery>

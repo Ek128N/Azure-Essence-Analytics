@@ -1,13 +1,36 @@
 <witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
        <WORKITEMTYPE name="Essence LevelOfDetail" refname="HITS.Essence.LevelOfDetail">
           <FIELDS>
-            <FIELD name="Description" refname="System.Description" type="HTML" />
-            <FIELD name="LOD Order" refname="HITS.Essence.LODOrder" type="Integer" />
+            <FIELD name="Title" refname="System.Title" type="String">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Description" refname="System.Description" type="HTML">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Special Id" refname="HITS.Essence.SpecialId" type="String" />
+            <FIELD name="Order" refname="HITS.Essence.StateOrder" type="Integer">
+              <REQUIRED />
+            </FIELD>
           </FIELDS> 
           <WORKFLOW>
             <STATES>
-              <STATE value="New" />
-              <STATE value="Locked">
+              <STATE value="New">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.StateOrder">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
+                    <FROZEN />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+              <STATE value="Active">
                 <FIELDS>
                   <FIELD refname="System.Title">
                     <READONLY />
@@ -15,7 +38,26 @@
                   <FIELD refname="System.Description">
                     <READONLY />
                   </FIELD>
-                  <FIELD refname="HITS.Essence.LODOrder">
+                  <FIELD refname="HITS.Essence.StateOrder">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
+                    <READONLY />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+              <STATE value="Closed">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.StateOrder">
+                    <READONLY />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
                     <READONLY />
                   </FIELD>
                 </FIELDS>
@@ -27,9 +69,19 @@
                   <DEFAULTREASON value="Created" />
                 </REASONS>
               </TRANSITION>
-              <TRANSITION from="New" to="Locked">
+              <TRANSITION from="New" to="Active">
                 <REASONS>
-                  <DEFAULTREASON value="Locked" />
+                  <DEFAULTREASON value="Active" />
+                </REASONS>
+              </TRANSITION>
+              <TRANSITION from="New" to="Closed">
+                <REASONS>
+                  <DEFAULTREASON value="Closed" />
+                </REASONS>
+              </TRANSITION>
+              <TRANSITION from="Active" to="Closed">
+                <REASONS>
+                  <DEFAULTREASON value="Closed" />
                 </REASONS>
               </TRANSITION>
             </TRANSITIONS>
@@ -37,7 +89,7 @@
           <FORM>
             <Layout>
               <Control FieldName="System.Description" Type="FieldControl" Label="Description" />
-              <Control FieldName="HITS.Essence.LODOrder" Type="FieldControl" Label="Order" />
+              <Control FieldName="HITS.Essence.StateOrder" Type="FieldControl" Label="Order" />
             </Layout>
           </FORM>
        </WORKITEMTYPE>  

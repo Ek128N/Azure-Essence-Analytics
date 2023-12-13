@@ -1,29 +1,14 @@
 <witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
        <WORKITEMTYPE name="Essence SubAlpha" refname="HITS.Essence.SubAlpha">  
           <FIELDS>
+            <FIELD name="Title" refname="System.Title" type="String">
+              <REQUIRED />
+            </FIELD>
             <FIELD name="Description" refname="System.Description" type="HTML" />
-            <FIELD name="Lower Bound" refname="HITS.Essence.AlphaLowerBound" type="Integer" />
-            <FIELD name="Upper Bound" refname="HITS.Essence.AlphaUpperBound" type="Integer" />
-          </FIELDS> 
+          </FIELDS>
           <WORKFLOW>
             <STATES>
               <STATE value="New" />
-              <STATE value="Locked">
-                <FIELDS>
-                  <FIELD refname="System.Title">
-                    <READONLY />
-                  </FIELD>
-                  <FIELD refname="System.Description">
-                    <READONLY />
-                  </FIELD>
-                  <FIELD refname="HITS.Essence.AlphaLowerBound">
-                    <READONLY />
-                  </FIELD>
-                  <FIELD refname="HITS.Essence.AlphaUpperBound">
-                    <READONLY />
-                  </FIELD>
-                </FIELDS>
-              </STATE>
             </STATES>
             <TRANSITIONS>
               <TRANSITION from="" to="New">
@@ -31,18 +16,11 @@
                   <DEFAULTREASON value="Created" />
                 </REASONS>
               </TRANSITION>
-              <TRANSITION from="New" to="Locked">
-                <REASONS>
-                  <DEFAULTREASON value="Locked" />
-                </REASONS>
-              </TRANSITION>
             </TRANSITIONS>
           </WORKFLOW>
           <FORM>
             <Layout>
-              <Control FieldName="System.Description" Type="FieldControl" Label="Description" />
-              <Control FieldName="HITS.Essence.AlphaLowerBound" Type="FieldControl" Label="Lower Bound" />
-              <Control FieldName="HITS.Essence.AlphaUpperBound" Type="FieldControl" Label="Upper Bound" />
+              <Control FieldName="System.Description" Type="FieldControl" Label="Description"/>
             </Layout>
           </FORM>
        </WORKITEMTYPE>  

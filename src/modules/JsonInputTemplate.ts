@@ -23,7 +23,8 @@ export class Activity implements WorkItemId{
     public id!: string;
 }
 
-export class AlphaContainment {
+export class AlphaContainment implements WorkItemId {
+    public WIId?:string|null;
     public upperBound?: number;
     public lowerBound?: number;
     public supAlphaId?: string;

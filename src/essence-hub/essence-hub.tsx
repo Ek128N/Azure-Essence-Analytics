@@ -2,11 +2,14 @@ import "azure-devops-ui/Core/override.css";
 import "./essence-hub.scss";
 
 import * as SDK from "azure-devops-extension-sdk";
+import { WorkItemTrackingProcessRestClient } from "azure-devops-extension-api/WorkItemTrackingProcess";
+import { CoreRestClient } from "azure-devops-extension-api/Core";
 import { Page } from "azure-devops-ui/Page";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import JsonInput from "./components/JsonInput" ;
+import JsonInput from "../components/JsonInput/JsonInput" ;
+import ProcessConfig from "../components/ProcessConfig/ProcessConfig";
 
 import { useEffect, useState } from "react";
 import { Button } from "azure-devops-ui/Button";
@@ -24,7 +27,7 @@ function Hub() {
   const [vssRestClientOptions, setVssRestClientOptions] = useState<IVssRestClientOptions>({});
   const [projectId, setProjectId] = useState<string>("");
   const [isValidProcess, setIsValidProcess] = useState<boolean>();
-  const [jsonData, setJsonData] = useState<[JsonInputTemplate]>([new JsonInputTemplate()]);
+
 
   useEffect(() => {
     let clientOptions: IVssRestClientOptions;
@@ -66,9 +69,7 @@ function Hub() {
 
   }
 
-  function CheckState() {
-    console.log(jsonData);
-  }
+
 
   return (
     <Page className="padding-horizontal-16 flex-grow">
@@ -78,13 +79,11 @@ function Hub() {
         className="margin-bottom-16"
       />
       <ProcessCheck isValidProcess={isValidProcess}>
-        <Button
-            text="Check jsonData state"
 
-            onClick={CheckState}
-        />
-        <JsonInput setJsonData={setJsonData}/>
+        <JsonInput projectId={projectId} vssRestClientOptions={vssRestClientOptions}/>
+          <ProcessConfig/>
       </ProcessCheck>
+
     </Page>
   );
 }

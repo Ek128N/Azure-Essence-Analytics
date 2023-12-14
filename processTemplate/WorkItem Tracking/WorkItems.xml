@@ -31,12 +31,14 @@
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Issue.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\SharedParameter.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Alpha.xml" />
-        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaDefinition.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaDefinition.xml" />  
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaContainment.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaState.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaStateDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Checkpoint.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\CheckpointDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaCriterion.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaCriterionDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Activity.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\ActivityDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProductDefinition.xml" />
@@ -44,6 +46,7 @@
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\LevelOfDetail.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\LevelOfDetailDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProductCriterion.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProductCriterionDefinition.xml" />
       </WORKITEMTYPES>
     </taskXml>
   </task>
@@ -75,8 +78,11 @@
         </QueryFolder>
         <QueryFolder name="Essence">
           <Query name="Alphas" fileName="WorkItem Tracking\Queries\Alphas.wiq" />
-          <Query name="SubAlphaDefinitions" fileName="WorkItem Tracking\Queries\SubAlphaDefinitions.wiq" />
+          <!--<Query name="SubAlphaDefinitions" fileName="WorkItem Tracking\Queries\SubAlphaDefinitions.wiq" />
+          <Query name="SubAlphas" fileName="WorkItem Tracking\Queries\SubAlphas.wiq" />-->
           <Query name="WorkProductDefinitions" fileName="WorkItem Tracking\Queries\WorkProductDefinitions.wiq" />
+          <Query name="WorkProducts" fileName="WorkItem Tracking\Queries\WorkProducts.wiq" />
+          <Query name="ActivityDefinitions" fileName="WorkItem Tracking\Queries\ActivityDefinitions.wiq" />
         </QueryFolder>
         <Query name="My Bugs" fileName="WorkItem Tracking\Queries\MyBugs.wiq" />
         <Query name="My Tasks" fileName="WorkItem Tracking\Queries\MyTasks.wiq" />

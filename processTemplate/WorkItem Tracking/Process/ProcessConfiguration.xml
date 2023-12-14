@@ -199,11 +199,13 @@
     <WorkItemColor primary="FF004B50" secondary="FFFCEECF" name="Shared Parameter" />
     <WorkItemColor primary="FF000000" secondary="FFFCEECF" name="Essence Alpha" />
     <WorkItemColor primary="FF000000" secondary="FFFCEECF" name="Essence AlphaDefinition" />
+    <WorkItemColor primary="FF000000" secondary="FFFCEECF" name="Essence AlphaContainment" />
     <WorkItemColor primary="FF7E00C2" secondary="FFFCEECF" name="Essence State" />
     <WorkItemColor primary="FF7E00C2" secondary="FFFCEECF" name="Essence StateDefinition" />
     <WorkItemColor primary="FF0098C7" secondary="FFFCEECF" name="Essence Checkpoint" />
     <WorkItemColor primary="FF0098C7" secondary="FFFCEECF" name="Essence CheckpointDefinition" />
     <WorkItemColor primary="FF0DC200" secondary="FFFCEECF" name="Essence AlphaCriterion" />
+    <WorkItemColor primary="FF0DC200" secondary="FFFCEECF" name="Essence AlphaCriterionDefinition" />
     <WorkItemColor primary="FFE0C302" secondary="FFFCEECF" name="Essence Activity" />
     <WorkItemColor primary="FFE0C302" secondary="FFFCEECF" name="Essence ActivityDefinition" />
     <WorkItemColor primary="FF68FF32" secondary="FFFCEECF" name="Essence WorkProductDefinition" />
@@ -211,6 +213,7 @@
     <WorkItemColor primary="FFA8024A" secondary="FFFCEECF" name="Essence LevelOfDetail" />
     <WorkItemColor primary="FFA8024A" secondary="FFFCEECF" name="Essence LevelOfDetailDefinition" />
     <WorkItemColor primary="FFAC63D6" secondary="FFFCEECF" name="Essence WorkProductCriterion" />
+    <WorkItemColor primary="FFAC63D6" secondary="FFFCEECF" name="Essence WorkProductCriterionDefinition" />
   </WorkItemColors>
   <Properties>
     <Property name="BugsBehavior" value="AsTasks" />

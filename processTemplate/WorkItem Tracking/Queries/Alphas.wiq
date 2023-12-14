@@ -9,6 +9,7 @@
           (
             [Source].[System.TeamProject] = @project
             AND [Source].[System.WorkItemType] = 'Essence Alpha'
+            AND [Source].[System.Parent] = ''
           )
           AND (
               [System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward'

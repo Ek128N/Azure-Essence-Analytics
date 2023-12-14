@@ -8,7 +8,7 @@
      WHERE
           (
             [Source].[System.TeamProject] = @project
-            AND [Source].[System.WorkItemType] = 'Essence WorkProductDefinition'
+            AND [Source].[System.WorkItemType] = 'Essence WorkProduct'
           )
           AND (
               [System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward'
@@ -16,8 +16,8 @@
           AND (
               [Target].[System.TeamProject] = @project
               AND (
-                  [Target].[System.WorkItemType] = 'Essence LevelOfDetailDefinition'
-                  OR [Target].[System.WorkItemType] = 'Essence CheckpointDefinition'
+                  [Target].[System.WorkItemType] = 'Essence LevelOfDetail'
+                  OR [Target].[System.WorkItemType] = 'Essence Checkpoint'
               ) 
           )
     ORDER BY [HITS.Essence.StateOrder]

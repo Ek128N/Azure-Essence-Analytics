@@ -6,8 +6,8 @@
             </FIELD>
             <FIELD name="Type" refname="HITS.Essence.CriterionType" type="String">
               <ALLOWEDVALUES>
-                <LISTITEM value="0" />
-                <LISTITEM value="1" />
+                <LISTITEM value="Entry" />
+                <LISTITEM value="Completion" />
               </ALLOWEDVALUES>
               <REQUIRED />
             </FIELD>

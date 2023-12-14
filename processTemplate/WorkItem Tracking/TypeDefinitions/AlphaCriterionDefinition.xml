@@ -1,5 +1,5 @@
 <witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
-       <WORKITEMTYPE name="Essence AlphaCriterion" refname="HITS.Essence.AlphaCriterion">
+       <WORKITEMTYPE name="Essence AlphaCriterionDefinition" refname="HITS.Essence.AlphaCriterionDefinition">
           <FIELDS>
             <FIELD name="Title" refname="System.Title" type="String">
               <REQUIRED />

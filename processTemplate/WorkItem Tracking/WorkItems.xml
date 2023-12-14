@@ -31,15 +31,18 @@
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Issue.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\SharedParameter.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Alpha.xml" />
-        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\SubAlphaDefinition.xml" />
-        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\SubAlpha.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaState.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaStateDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Checkpoint.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\CheckpointDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\AlphaCriterion.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\Activity.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\ActivityDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProductDefinition.xml" />
-        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProduct.xml" /> 
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProduct.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\LevelOfDetail.xml" />
+        <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\LevelOfDetailDefinition.xml" />
         <WORKITEMTYPE fileName="WorkItem Tracking\TypeDefinitions\WorkProductCriterion.xml" />
       </WORKITEMTYPES>
     </taskXml>

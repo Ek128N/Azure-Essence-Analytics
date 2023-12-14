@@ -1,0 +1,62 @@
+<witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
+       <WORKITEMTYPE name="Essence CheckpointDefinition" refname="HITS.Essence.CheckpointDefintion">  
+          <DESCRIPTION>A checkpoint is an item in a check list that needs to be verified in a state.</DESCRIPTION>
+          <FIELDS>
+            <FIELD name="Title" refname="System.Title" type="String">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Description" refname="System.Description" type="HTML">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Order" refname="HITS.Essence.StateOrder" type="Integer">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="DegreeOfEvidence Value" refname="HITS.Essence.DegreeOfEvidenceValue" type="String">
+              <ALLOWEDVALUES>
+                <LISTITEM value="0" />
+                <LISTITEM value="1" />
+                <LISTITEM value="2" />
+              </ALLOWEDVALUES>
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Special Id" refname="HITS.Essence.SpecialId" type="String" />
+          </FIELDS> 
+          <WORKFLOW>
+            <STATES>
+              <STATE value="Active">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.StateOrder">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.DegreeOfEvidenceValue">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
+                    <FROZEN />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+            </STATES>
+            <TRANSITIONS>
+              <TRANSITION from="" to="Active">
+                <REASONS>
+                  <DEFAULTREASON value="Created" />
+                </REASONS>
+              </TRANSITION>
+            </TRANSITIONS>
+          </WORKFLOW>
+          <FORM>
+            <Layout>
+              <Control FieldName="System.Description" Type="FieldControl" Label="Description" />
+              <Control FieldName="HITS.Essence.StateOrder" Type="FieldControl" Label="Order" />
+              <Control FieldName="HITS.Essence.DegreeOfEvidenceValue" Type="FieldControl" Label="DegreeOfEvidence Manager Opinion" />
+            </Layout>
+          </FORM>
+       </WORKITEMTYPE>  
+</witd:WITD>  

@@ -68,7 +68,7 @@
     <WORKITEMTYPE name="Epic" />
     <WORKITEMTYPE name="Bug" />
     <WORKITEMTYPE name="Issue" />
-    <WORKITEMTYPE name="Essence Activity" />
+    <!--<WORKITEMTYPE name="Essence Activity" />
     <WORKITEMTYPE name="Essence Alpha" />
     <WORKITEMTYPE name="Essence AlphaCriterion" />
     <WORKITEMTYPE name="Essence Checkpoint" />
@@ -76,6 +76,6 @@
     <WORKITEMTYPE name="Essence State" />
     <WORKITEMTYPE name="Essence SubAlphaDefinition" />
     <WORKITEMTYPE name="Essence WorkProductDefinition" />
-    <WORKITEMTYPE name="Essence WorkProductCriterion" />
+    <WORKITEMTYPE name="Essence WorkProductCriterion" />-->
   </CATEGORY>
 </cat:CATEGORIES>

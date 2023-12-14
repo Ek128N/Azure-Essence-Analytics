@@ -1,0 +1,49 @@
+<witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
+       <WORKITEMTYPE name="Essence LevelOfDetailDefinition" refname="HITS.Essence.LevelOfDetailDefintion">
+          <FIELDS>
+            <FIELD name="Title" refname="System.Title" type="String">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Description" refname="System.Description" type="HTML">
+              <REQUIRED />
+            </FIELD>
+            <FIELD name="Special Id" refname="HITS.Essence.SpecialId" type="String" />
+            <FIELD name="Order" refname="HITS.Essence.StateOrder" type="Integer">
+              <REQUIRED />
+            </FIELD>
+          </FIELDS> 
+          <WORKFLOW>
+            <STATES>
+              <STATE value="New">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.StateOrder">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
+                    <FROZEN />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
+            </STATES>
+            <TRANSITIONS>
+              <TRANSITION from="" to="New">
+                <REASONS>
+                  <DEFAULTREASON value="Created" />
+                </REASONS>
+              </TRANSITION>
+            </TRANSITIONS>
+          </WORKFLOW>
+          <FORM>
+            <Layout>
+              <Control FieldName="System.Description" Type="FieldControl" Label="Description" />
+              <Control FieldName="HITS.Essence.StateOrder" Type="FieldControl" Label="Order" />
+            </Layout>
+          </FORM>
+       </WORKITEMTYPE>  
+</witd:WITD>  

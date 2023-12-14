@@ -1,14 +1,26 @@
 <witd:WITD application="Work item type editor" version="1.0" xmlns:witd="http://schemas.microsoft.com/VisualStudio/2008/workitemtracking/typedef">  
-       <WORKITEMTYPE name="Essence SubAlpha" refname="HITS.Essence.SubAlpha">  
+       <WORKITEMTYPE name="Essence ActivityDefinition" refname="HITS.Essence.ActivityDefinition">  
+          <DESCRIPTION>An activity defines one or more kinds of work items and gives guidance on how to perform these.</DESCRIPTION>
           <FIELDS>
             <FIELD name="Title" refname="System.Title" type="String">
               <REQUIRED />
             </FIELD>
-            <FIELD name="Description" refname="System.Description" type="HTML" />
-          </FIELDS>
+            <FIELD name="Description" refname="System.Description" type="HTML">
+              <REQUIRED />
+            </FIELD>
+          </FIELDS> 
           <WORKFLOW>
             <STATES>
-              <STATE value="New" />
+              <STATE value="New">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <FROZEN />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
             </STATES>
             <TRANSITIONS>
               <TRANSITION from="" to="New">

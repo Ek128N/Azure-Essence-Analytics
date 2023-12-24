@@ -14,23 +14,13 @@
           </FIELDS>
           <WORKFLOW>
             <STATES>
-              <STATE value="New">
-                <FIELDS>
-                  <FIELD refname="System.Title">
-                    <FROZEN />
-                  </FIELD>
-                  <FIELD refname="System.Description">
-                    <FROZEN />
-                  </FIELD>
-                </FIELDS>
-              </STATE>
               <STATE value="Active">
                 <FIELDS>
                   <FIELD refname="System.Title">
-                    <READONLY />
+                    <FROZEN />
                   </FIELD>
                   <FIELD refname="System.Description">
-                    <READONLY />
+                    <FROZEN />
                   </FIELD>
                 </FIELDS>
               </STATE>
@@ -46,12 +36,7 @@
               </STATE>
             </STATES>
             <TRANSITIONS>
-              <TRANSITION from="" to="New">
-                <REASONS>
-                  <DEFAULTREASON value="Created" />
-                </REASONS>
-              </TRANSITION>
-              <TRANSITION from="New" to="Active">
+              <TRANSITION from="" to="Active">
                 <REASONS>
                   <DEFAULTREASON value="Active" />
                 </REASONS>
@@ -61,9 +46,9 @@
                   <DEFAULTREASON value="Closed" />
                 </REASONS>
               </TRANSITION>
-              <TRANSITION from="New" to="Closed">
+              <TRANSITION from="Closed" to="Active">
                 <REASONS>
-                  <DEFAULTREASON value="Closed" />
+                  <DEFAULTREASON value="UnClosed" />
                 </REASONS>
               </TRANSITION>
             </TRANSITIONS>

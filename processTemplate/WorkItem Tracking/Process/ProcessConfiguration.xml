@@ -65,8 +65,7 @@
     -->
     <PortfolioBacklog category="HITS.EssenceAlphaCategory" pluralName="Alphas" singularName="Alpha"  workItemCountLimit="1000">
       <States>
-        <State value="New" type="Proposed" />
-        <State value="Active" type="InProgress" />
+        <State value="Active" type="Proposed" />
         <State value="Closed" type="Complete" />
       </States>
       <Columns>
@@ -101,7 +100,8 @@
     </PortfolioBacklog>
     <PortfolioBacklog category="HITS.EssenceCheckpointCategory" parent="HITS.EssenceStateCategory" pluralName="Checkpoints" singularName="Checkpoint"  workItemCountLimit="1000" >
         <States>
-          <State value="Active" type="Proposed" />
+          <State value="New" type="Proposed" />
+          <State value="Active" type="InProgress" />
           <State value="Closed" type="Complete" />
         </States>
         <Columns>

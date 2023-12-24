@@ -27,6 +27,25 @@
           </FIELDS> 
           <WORKFLOW>
             <STATES>
+              <STATE value="New">
+                <FIELDS>
+                  <FIELD refname="System.Title">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="System.Description">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.StateOrder">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.DegreeOfEvidenceValue">
+                    <FROZEN />
+                  </FIELD>
+                  <FIELD refname="HITS.Essence.SpecialId">
+                    <FROZEN />
+                  </FIELD>
+                </FIELDS>
+              </STATE>
               <STATE value="Active">
                 <FIELDS>
                   <FIELD refname="System.Title">
@@ -67,9 +86,14 @@
               </STATE>
             </STATES>
             <TRANSITIONS>
-              <TRANSITION from="" to="Active">
+              <TRANSITION from="" to="New">
                 <REASONS>
                   <DEFAULTREASON value="Created" />
+                </REASONS>
+              </TRANSITION>
+              <TRANSITION from="New" to="Active">
+                <REASONS>
+                  <DEFAULTREASON value="Activated" />
                 </REASONS>
               </TRANSITION>
               <TRANSITION from="Active" to="Closed">

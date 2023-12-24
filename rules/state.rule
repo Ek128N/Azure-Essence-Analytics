@@ -1,0 +1,57 @@
+// Если State state'a становится Closed, то проверяется, все ли children имеют State Closed, если нет, то меняет State тех детей, у которых State не Closed на Closed
+//state's State Active->Closed children State ->Closed
+
+//** Если State переводят из Closed, то все children должны быть переведены в State Active
+//** state's State Closed->Active children chekpoints State ->Active
+//Обязательна должна быть проверка, что все childrem имеют status Closed , для переведения всех в Status Active,
+//Иначе checkpoint.rule стригерит state.rule, и вместо одного чекпоинта переведёт все чекпоинты в статус Active
+
+// При изменении State'a на Closed происходит Разблокировка следующего по порядку Order state'a и перевод его и его checkpoint'ов в статус Active.
+
+//Проверять State State'ов и сопоставлять с статусом parentAlpha
+//----------------
+
+string message="";
+
+var stateUpdate=selfChanges.Fields["System.State"];
+string previousState=stateUpdate.OldValue.ToString();
+string newState=stateUpdate.NewValue.ToString();
+
+var children=self.Children;
+var parentAlpha=self.Parent;
+
+if(parentAlpha!=null){
+var alphaChildren=parentAlpha.Children;
+if(alphaChildren.All(c=>c.State=="Closed")){
+parentAlpha.State="Closed";
+}
+else{
+if(parentAlpha.State=="Closed")
+    parentAlpha.State="Active";
+}
+}
+
+if(previousState=="Active" && newState=="Closed" ){
+    if(children.Any(c=>c.State=="Active")){
+        message="there was children with state = Active";
+        foreach(var child in children){
+            if(child.State=="Active")
+                child.State="Closed";
+        }
+    }
+    else{
+    message="there was not children with state = Active ";
+    }
+
+}
+
+if(previousState=="Closed" && newState=="Active"){
+    message=" Closed To Active";
+    if(children.All(c=>c.State=="Closed")){
+    foreach(var child in children)
+        child.State="Active";
+    }
+}
+
+
+return message;

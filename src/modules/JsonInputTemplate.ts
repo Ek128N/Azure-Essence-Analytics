@@ -12,13 +12,19 @@ export default class JsonInputTemplate {
     public workProducts?: [WorkProduct];
 }
 
-class Activity {
+
+interface WorkItemId{
+     WIId?:string|null;
+}
+export class Activity implements WorkItemId{
+    public WIId?:string|null;
     public name!: string;
     public description!: string;
     public id!: string;
 }
 
-class AlphaContainment {
+export class AlphaContainment implements WorkItemId {
+    public WIId?:string|null;
     public upperBound?: number;
     public lowerBound?: number;
     public supAlphaId?: string;
@@ -26,7 +32,8 @@ class AlphaContainment {
     public normalValue?: number;
 }
 
-class AlphaCriterion {
+export class AlphaCriterion implements WorkItemId {
+    public WIId?:string|null;
     public criterionTypeEnumValue?: number
     public partial?: boolean;
     public minimal?: number;
@@ -35,14 +42,16 @@ class AlphaCriterion {
     public activityId?: string;
 }
 
-class Alpha {
+export class Alpha implements WorkItemId {
+    public WIId?:string|null;
     public parentAlphaId?: string;
     public name?: string;
     public description?: string;
     public id!: string;
 }
 
-class Checkpoint {
+export class Checkpoint implements WorkItemId {
+    public WIId?:string|null;
     public name?: string;
     public description?: string;
     public order?: number;
@@ -52,7 +61,8 @@ class Checkpoint {
     public detailId?: string;
 }
 
-class DegreeOfEvidence {
+class DegreeOfEvidence implements WorkItemId {
+    public WIId?:string|null;
     public id?: string;
     public iCheckableId?: string;
     public typeOfEvidence?: boolean;
@@ -60,7 +70,8 @@ class DegreeOfEvidence {
     public degreeOfEvidenceEnumValue?: number;
 }
 
-class LevelOfDetail {
+export class LevelOfDetail implements WorkItemId {
+    public WIId?:string|null;
     public id?: string;
     public specialId?: string;
     public name?: string;
@@ -69,7 +80,8 @@ class LevelOfDetail {
     public order?: number;
 }
 
-class WorkProductCriterion {
+export class WorkProductCriterion implements WorkItemId {
+    public WIId?:string|null;
     public criterionTypeEnumValue?: number;
     public partial?: boolean;
     public minimal?: number;
@@ -78,7 +90,8 @@ class WorkProductCriterion {
     public activityId?: string;
 }
 
-class State {
+export class State implements WorkItemId {
+    public WIId?:string|null;
     public id?: string;
     public specialId?: string;
     public name?: string;
@@ -88,7 +101,7 @@ class State {
 
 }
 
-class WorkProductManifest {
+export class WorkProductManifest {
     public upperBound?: number;
     public lowerBound?: number;
     public alphaId?: string;
@@ -96,7 +109,8 @@ class WorkProductManifest {
     public normalValue?: number;
 }
 
-class WorkProduct {
+export class WorkProduct implements WorkItemId {
+    public WIId?:string|null;
     public name?: string;
     public description?: string;
     public id?: string;

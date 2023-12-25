@@ -16,6 +16,7 @@
                 <LISTITEM value="0" />
                 <LISTITEM value="1" />
                 <LISTITEM value="2" />
+                <LISTITEM value="3" />
               </ALLOWEDVALUES>
               <REQUIRED />
             </FIELD>

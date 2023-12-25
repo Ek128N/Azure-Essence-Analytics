@@ -1,0 +1,41 @@
+        string message = "";
+        var stateLinks = self.RelationLinks;
+        WorkItemWrapper stateDefinition = null;
+        foreach (var successorLink in stateLinks.Where(link => string.Equals("System.LinkTypes.Duplicate-Reverse", link.Rel)))
+        {
+            var workItem = store.GetWorkItem(successorLink);
+            if (workItem.WorkItemType == "Essence StateDefinition")
+            {
+                stateDefinition = workItem;
+                message += " - Essence AlphaDefinition detected" ;
+                break;
+            }
+        }
+        if (stateDefinition == null)
+        {
+            message = "stateDefinition is null";
+
+            return message;
+        }
+        var checkpointDefinitions=stateDefinition.Children.Where(w=>w.WorkItemType=="Essence CheckpointDefinition").OrderBy(s=>(Int64)s["HITS.Essence.StateOrder"]);
+
+        const string specialIdField = "HITS.Essence.SpecialId";
+        const string degreeOfEvidenceField = "HITS.Essence.DegreeOfEvidenceValue";
+        const string orderField = "HITS.Essence.StateOrder";
+
+        foreach (var checkpointDefinition in checkpointDefinitions)
+        {
+            string specialId = (string)checkpointDefinition[specialIdField];
+            int degreeOfEvidence = (int)checkpointDefinition[degreeOfEvidenceField];
+            int order = (int)checkpointDefinition[orderField];
+            var newCheckpoint = store.NewWorkItem("Essence Checkpoint");
+            newCheckpoint.Title = checkpointDefinition.Title;
+            newCheckpoint.Description = checkpointDefinition.Description;
+            newCheckpoint[specialIdField] = specialId;
+            newCheckpoint[degreeOfEvidenceField] = degreeOfEvidence;
+            newCheckpoint[orderField] = order;
+            newCheckpoint.Relations.AddParent(self);
+            newCheckpoint.Relations.AddLink("System.LinkTypes.Duplicate-Reverse",checkpointDefinition.Url,$"checkpoint ${checkpointDefinition.Title} is instance of CheckpointDefinition");
+        }
+
+        return message;

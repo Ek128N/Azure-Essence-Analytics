@@ -476,7 +476,27 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
                     path: "/fields/Description",
                     value: `${alpha.description}`
                 })
-                let bodyRequest: WIRequestBodyData[] = [title, description];
+
+
+                let alphaDefinitionReferenceValue: WorkItemRelation = {
+                    attributes: {
+                        isLocked: false,
+                        comment: `Alpha is a duplicate of AlphaDefinition ${alpha?.name}`,
+                        name: 'Duplicate Of'
+                    },
+                    rel: 'System.LinkTypes.Duplicate-Reverse',
+                    url: `${projectData.vssRestClientOptions.rootPath}${projectData.projectId}/_apis/wit/wokrItems/${alpha?.WIId}`
+
+                };
+                let alphaDefinitionReference = CreateRequestBodyWIObject({
+                    path: "/relations/System.LinkTypes.Duplicate-Reverse",
+                    value: alphaDefinitionReferenceValue
+                });
+
+
+
+
+                let bodyRequest: WIRequestBodyData[] = [title, description,alphaDefinitionReference];
                 let alphaWIId = await CreateWIFetch(bodyRequest, AlphaName);
                 alphasWIId?.push({Id: alpha.id, WIId: alphaWIId, name: alpha.name});
             }
@@ -588,11 +608,11 @@ export async function createWorkItems(dataCollection: [JsonInputTemplate], proje
         //Create Alphas without parent
         let alphasWIId: CreationID[] | undefined = await CreateDefaultAlphas(alphas);
         console.log(alphasWIId)
-        let statesWIId: CreationID[] | undefined = await CreateDefaultStates(alphasWIId, states);
+        //let statesWIId: CreationID[] | undefined = await CreateDefaultStates(alphasWIId, states);
 
-        console.log(statesWIId)
+        //console.log(statesWIId)
 
-        await CreateDefaultCheckpoints(statesWIId, checkpoints);
+        //await CreateDefaultCheckpoints(statesWIId, checkpoints);
 
         //Create States for those alphas
         //Create Checkpoints for states.

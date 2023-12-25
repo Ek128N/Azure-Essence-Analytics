@@ -96,6 +96,11 @@
                   <DEFAULTREASON value="Activated" />
                 </REASONS>
               </TRANSITION>
+              <TRANSITION from="New" to="Closed">
+                <REASONS>
+                  <DEFAULTREASON value="Closed" />
+                </REASONS>
+              </TRANSITION>
               <TRANSITION from="Active" to="Closed">
                 <REASONS>
                   <DEFAULTREASON value="Closed" />

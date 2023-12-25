@@ -1,0 +1,90 @@
+        
+    string message = " ";
+    var alphaLinks = self.RelationLinks;
+    WorkItemWrapper AlphaDefinition = null;
+    foreach (var successorLink in alphaLinks.Where(link => string.Equals("System.LinkTypes.Duplicate-Reverse", link.Rel)))
+    {
+        
+        AlphaDefinition = store.GetWorkItem(successorLink);
+        message = "Duplicate detected";
+        //Проверить тип на AlphaDefinition
+        if (AlphaDefinition.WorkItemType == "Essence AlphaDefinition")
+        {
+            message += " - Essence AlphaDefinition detected" ;
+            break;
+        }
+    }
+
+    if (AlphaDefinition == null)
+    {
+        message = "AlphaDefinition is null";
+        
+        return message;
+    }
+    
+    
+    
+    var workProductDefinitions = AlphaDefinition.Children.Where(w=>w.WorkItemType=="Essence WorkProductDefinition");
+
+    if (workProductDefinitions == null)
+    {
+        message += " WorkProductDefinitionIsNull";
+    }else
+    {
+        const string lowerBoundField = "HITS.Essence.AlphaLowerBound";
+        const string upperBoundField = "HITS.Essence.AlphaUpperBound";
+        const string normalValueField = "HITS.Essence.NormalValue";
+        
+        //Создать WorkProduct с Duplicate Link на Definition и Parent Link на Alpha
+        foreach (var workProductDefinition in workProductDefinitions)
+        {
+            int workProductDefLowerBound = workProductDefinition.GetFieldValue<int>(lowerBoundField, 0);
+            int workProductDefUpperBound = workProductDefinition.GetFieldValue<int>(upperBoundField, 10);
+            int workProductDefNormalValue = workProductDefinition.GetFieldValue<int>(normalValueField, 2);
+            //logger.WriteInfo("WorkProduct Title:" +workProductDefinition.Title+" Description:"+ workProductDefinition.Description+ " Bounds:"+workProductDefLowerBound.ToString()+" - "+workProductDefUpperBound.ToString() +" NormalValue:" +workProductDefNormalValue.ToString());
+            
+            var newWorkProduct = store.NewWorkItem("Essence WorkProduct");
+            newWorkProduct.Title = workProductDefinition.Title;
+            newWorkProduct.Description = workProductDefinition.Description;
+            newWorkProduct[lowerBoundField] = workProductDefLowerBound;
+            newWorkProduct[upperBoundField] = workProductDefUpperBound;
+            newWorkProduct[normalValueField] = workProductDefNormalValue;
+            newWorkProduct.Relations.AddParent(self);
+            newWorkProduct.Relations.AddLink("System.LinkTypes.Duplicate-Reverse",workProductDefinition.Url,$"WorkProduct ${workProductDefinition.Title} is instance of WorkProduct Definitions");
+        }
+    }
+
+
+
+
+    var stateDefinitions=AlphaDefinition.Children.Where(w=>w.WorkItemType=="Essence StateDefinition").OrderBy(s=>(Int64)s["HITS.Essence.StateOrder"]);
+    if (stateDefinitions == null)
+    {
+        message+= "StateDefinitions is null";
+        return message;
+    }
+    else
+    {//Create States with parent Alpha and Duplicate Links , Where Essence State with Lowest value of Order will be in Active State
+        const string orderField = "HITS.Essence.StateOrder";
+      
+
+        //TODO:Найти state  наименьшим order, и  только его перевисти в  active, и запомнить его Id
+        foreach (var stateDefinition in stateDefinitions)
+        {
+
+            int orderValue = stateDefinition.GetFieldValue<int>(orderField, 0);
+            var newState = store.NewWorkItem("Essence State");
+            newState.Title = stateDefinition.Title;
+            newState.Description = stateDefinition.Description;
+            newState[orderField] = orderValue;
+            newState.Relations.AddParent(self);
+            newState.Relations.AddLink("System.LinkTypes.Duplicate-Reverse",stateDefinition.Url,$"state ${stateDefinition.Title} is instance of StateDefinition");
+            
+
+        }
+
+    }
+
+    
+    
+    return message;

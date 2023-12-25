@@ -8,8 +8,8 @@
      WHERE
           (
             [Source].[System.TeamProject] = @project
-            AND [Source].[System.WorkItemType] = 'Essence AlphaDefinition'
-            AND [Source].[System.Parent] = ''
+            AND [Source].[System.WorkItemType] = 'Essence SubAlphaDefinition'
+            AND [Source].[System.Parent] <> ''
           )
           AND (
               [System.Links.LinkType] = 'System.LinkTypes.Hierarchy-Forward'
@@ -17,7 +17,7 @@
           AND (
               [Target].[System.TeamProject] = @project
               AND (
-                  [Target].[System.WorkItemType] = 'Essence State'
+                  [Target].[System.WorkItemType] = 'Essence StateDefinition'
               ) 
           )
     ORDER BY [HITS.Essence.StateOrder]

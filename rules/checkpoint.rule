@@ -4,7 +4,6 @@
 //Если родитель LevelOfDetails, то логика меняется:
 //При если State чекпоинта изменён на Closed, то если State LevelOfDetails !=Closed, то State становится Closed self.State=="Closed" -> parent.State="Closed"
 //Если State чекпоинта изменён на Active(с Closed),то проверяется отсутствие  у родителя checkpoint'ов с State=="Closed", и LevelOfDetail.State=Active
-
 string message = "";
 var parent = self.Parent;
 
@@ -23,7 +22,7 @@ if(parent.WorkItemType=="Essence State"){
     }
     else
     {
-    if(parent.State=="Closed")
+    if(parent.State=="Closed"||parent.State=="New")
         parent.State="Active";
     message = "Parent was not closed";
     }

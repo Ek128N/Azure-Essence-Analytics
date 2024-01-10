@@ -84,6 +84,11 @@
                   <DEFAULTREASON value="Closed" />
                 </REASONS>
               </TRANSITION>
+              <TRANSITION from="Closed" to="Active">
+                <REASONS>
+                  <DEFAULTREASON value="UnClosed" />
+                </REASONS>
+              </TRANSITION>
             </TRANSITIONS>
           </WORKFLOW>
           <FORM>

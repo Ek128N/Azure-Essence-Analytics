@@ -1,13 +1,8 @@
 import * as React from "react";
-import {JSX, useEffect, useState} from "react";
+import {JSX, useState} from "react";
 import {Button} from "azure-devops-ui/Button";
-import MethodDefinition from "../../modules/MethodDefinition";
-import {createWorkItems} from "../WorkItemCreator/WorkItemCreator";
+import MethodDefinition, {Method} from "../../modules/MethodDefinition";
 import {IVssRestClientOptions} from "azure-devops-extension-api";
-import {Spinner, SpinnerSize} from "azure-devops-ui/Spinner";
-import {Status, Statuses, StatusSize} from "azure-devops-ui/Status";
-import {ObservableValue} from "azure-devops-ui/Core/Observable";
-import {ImportStatus} from "../ProcessImport";
 import {getDataServices} from "../common/DataService";
 
 export interface IJsonInput {
@@ -21,7 +16,7 @@ export default function render(params: IJsonInput): JSX.Element {
     console.log("JsonInput")
     let methodStorageKey:string="essence"
 
-    const [jsonData, setJsonData] = useState<[MethodDefinition]>([new MethodDefinition()]);
+    const [jsonData, setJsonData] = useState<Method[]>([]);
 
     function GetJson(): void {
 
@@ -52,16 +47,33 @@ export default function render(params: IJsonInput): JSX.Element {
 
         async function SaveJsonData(json: string) {
             let obj = JSON.parse(json);
-            const template: [MethodDefinition] = Object.assign([new MethodDefinition], obj) as [MethodDefinition];
+            const methodDefinitions = obj as MethodDefinition[];
+            console.log(methodDefinitions)
+            function createNamesForMethodDefinitions(methodDefinitions: MethodDefinition[]):Method[] {
+                let methods:Method[] = [] ;
+
+                function GenerateMethodName(number:number):string {
+                    // Current Date + Number inOrder
+                    let dateTime = new Date()
+                    return "Method "+number+": "+ dateTime.toString().slice(4,-12)   ;
+                }
+                let c=1;
+                for ( let methodDefinition of methodDefinitions ){
+                    methods.push(new Method(GenerateMethodName(c),methodDefinition))
+                    c++;
+                }
+                return methods;
+            }
+
+            let methods= createNamesForMethodDefinitions(methodDefinitions);
 
             //Save data to React state
-            setJsonData(template as [MethodDefinition]);
-
+            setJsonData(methods);
 
             //Save data to Organization storage
             let _dataManager = await getDataServices();
 
-            await _dataManager.setValue(methodStorageKey, template);
+            await _dataManager.setValue(methodStorageKey, methods);
 
         }
 
@@ -72,7 +84,7 @@ export default function render(params: IJsonInput): JSX.Element {
         console.log(jsonData);
 
         let _dataManager = await getDataServices();
-        _dataManager.getValue<MethodDefinition>(methodStorageKey).then( function (data: MethodDefinition) {
+        _dataManager.getValue<Method>(methodStorageKey).then( function (data: Method) {
 
             console.log(data)
 

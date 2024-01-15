@@ -1,3 +1,15 @@
+
+export class  Method {
+    public methodName?:string;
+    public methodDefinition?:MethodDefinition;
+
+    constructor(methodName?: string, methodDefinition?: MethodDefinition) {
+        this.methodName = methodName;
+        this.methodDefinition = methodDefinition;
+    }
+}
+
+
 export default class MethodDefinition {
     public activities?: [Activity];
     public alphaContainments?: [AlphaContainment];

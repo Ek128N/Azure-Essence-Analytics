@@ -17,7 +17,7 @@ import { Header, TitleSize } from "azure-devops-ui/Header";
 import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "azure-devops-extension-api";
 import { RestTokenProvider } from "../modules/AuthTokenProvider";
 import { AzureFetch } from "../modules/AzureFetch";
-import JsonInputTemplate from "../modules/JsonInputTemplate";
+import MethodDefinition from "../modules/MethodDefinition";
 
 import { ProcessCheck } from "../components/ProcessCheck";
 
@@ -79,8 +79,6 @@ function Hub() {
         className="margin-bottom-16"
       />
       <ProcessCheck isValidProcess={isValidProcess}>
-
-        <JsonInput projectId={projectId} vssRestClientOptions={vssRestClientOptions}/>
           <ProcessConfig/>
       </ProcessCheck>
 

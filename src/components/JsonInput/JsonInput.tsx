@@ -1,29 +1,29 @@
 import * as React from "react";
-import {JSX, useState} from "react";
+import {JSX, useEffect, useState} from "react";
 import {Button} from "azure-devops-ui/Button";
-import JsonInputTemplate from "../../modules/JsonInputTemplate";
-import {createWorkItems} from "./WorkItemCreator";
+import MethodDefinition from "../../modules/MethodDefinition";
+import {createWorkItems} from "../WorkItemCreator/WorkItemCreator";
 import {IVssRestClientOptions} from "azure-devops-extension-api";
 import {Spinner, SpinnerSize} from "azure-devops-ui/Spinner";
 import {Status, Statuses, StatusSize} from "azure-devops-ui/Status";
 import {ObservableValue} from "azure-devops-ui/Core/Observable";
 import {ImportStatus} from "../ProcessImport";
+import {getDataServices} from "../common/DataService";
 
-export interface ProjectData {
-    projectId: string
+export interface IJsonInput {
     vssRestClientOptions: IVssRestClientOptions,
 }
 
 
 
-export default function render(projectData: ProjectData): JSX.Element {
-    //PassDown ProjectID & Vss data
+export default function render(params: IJsonInput): JSX.Element {
 
-    const [WICreationStatus, setWICreationStatus] = useState(Statuses.Waiting);
+    console.log("JsonInput")
+    let methodStorageKey:string="essence"
 
-    const [jsonData, setJsonData] = useState<[JsonInputTemplate]>([new JsonInputTemplate()]);
+    const [jsonData, setJsonData] = useState<[MethodDefinition]>([new MethodDefinition()]);
 
-    function ParseJson(): void {
+    function GetJson(): void {
 
         const jsonInputElement = document.getElementById("jsonInput") as HTMLInputElement;
         let file = jsonInputElement.files![0];
@@ -41,35 +41,44 @@ export default function render(projectData: ProjectData): JSX.Element {
 
         reader.onload = function () {
             let readRes = reader.result as string;
-            Parse(readRes);
+            SaveJsonData(readRes);
+            //SaveDataToState
+            //SaveDataToAzureDevOpsDataStorage
         };
 
         reader.onerror = function () {
             console.log(reader.error);
         };
 
-        function Parse(json: string) {
+        async function SaveJsonData(json: string) {
             let obj = JSON.parse(json);
-            const template: [JsonInputTemplate] = Object.assign([new JsonInputTemplate], obj) as [JsonInputTemplate];
+            const template: [MethodDefinition] = Object.assign([new MethodDefinition], obj) as [MethodDefinition];
 
-            setJsonData(template as [JsonInputTemplate]);
+            //Save data to React state
+            setJsonData(template as [MethodDefinition]);
+
+
+            //Save data to Organization storage
+            let _dataManager = await getDataServices();
+
+            await _dataManager.setValue(methodStorageKey, template);
 
         }
 
 
     }
 
-    function CheckState() {
+    async function CheckStoredData() {
         console.log(jsonData);
+
+        let _dataManager = await getDataServices();
+        _dataManager.getValue<MethodDefinition>(methodStorageKey).then( function (data: MethodDefinition) {
+
+            console.log(data)
+
+        });
     }
 
-    async function CreateWI() {
-        //start
-        setWICreationStatus(Statuses.Running);
-        await createWorkItems(jsonData, projectData);
-        //finish
-        setWICreationStatus(Statuses.Success);
-    }
 
 
     return (
@@ -78,29 +87,15 @@ export default function render(projectData: ProjectData): JSX.Element {
             <Button
                 text="Check jsonData state"
 
-                onClick={CheckState}
+                onClick={CheckStoredData}
             />
             <p>JsonInput</p>
-            <input type="file" id="jsonInput" onChange={ParseJson} accept=".json"/>
-           <div className="margin-top-16 flex-row">
+            <input type="file" id="jsonInput" onChange={GetJson} accept=".json"/>
             <Button
-                text="Create WorkItems"
-                onClick={CreateWI}
-            />{WICreationStatus==Statuses.Running &&
-            <Spinner
-                size={SpinnerSize.medium}
-                className="margin-left-8"
+                text="Save Methods"
+
+                onClick={GetJson}
             />
-           }
-               {WICreationStatus==Statuses.Success &&
-                   <Status
-                       {...Statuses.Success}
-                       key="success"
-                       size={StatusSize.l}
-                       className="flex-self-center margin-left-8"
-                   />
-               }
-           </div>
         </div>
 
     );

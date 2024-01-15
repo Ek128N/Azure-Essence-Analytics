@@ -1,18 +1,24 @@
 // Учитывать блокировку и иерархию.
 
 
-import JsonInputTemplate, {
+import MethodDefinition, {
     Activity,
     Alpha,
     AlphaContainment, AlphaCriterion,
     Checkpoint, LevelOfDetail,
     State,
     WorkProduct, WorkProductCriterion, WorkProductManifest
-} from "../../modules/JsonInputTemplate";
+} from "../../modules/MethodDefinition";
 import {AzureFetch} from "../../modules/AzureFetch";
-import {ProjectData} from "./JsonInput";
+
 import {WorkItemRelation} from "azure-devops-extension-api/WorkItemTracking";
 import {getKeywordSearchResults} from "azure-devops-ui/Filter";
+import {IVssRestClientOptions} from "azure-devops-extension-api";
+
+export interface IWorkItemCreator {
+    projectId: string
+    vssRestClientOptions: IVssRestClientOptions,
+}
 
 interface WIRequestBodyData {
     op?: string | null,
@@ -32,7 +38,7 @@ enum CriterionType {
 }
 
 
-export async function createWorkItems(dataCollection: [JsonInputTemplate], projectData: ProjectData) {
+export async function createWorkItems(dataCollection: [MethodDefinition], projectData: IWorkItemCreator) {
     //TODO: Remove location param, and get there
     const alphaName: string = "Essence AlphaDefinition";
     const alphaContainmentName: string = "Essence AlphaContainment";

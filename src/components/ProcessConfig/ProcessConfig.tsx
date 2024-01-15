@@ -40,7 +40,7 @@ export default function render(): JSX.Element {
                     //assign data
                     setObservableData(defaultData);
 
-                    SaveThresholdChanges();
+                    SaveConfigurationChanges();
                 } else {
                     setObservableData(data);
                 }
@@ -71,7 +71,7 @@ export default function render(): JSX.Element {
 
     //TODO: create class for Observables;
 
-    const SaveThresholdChanges = async () => {
+    const SaveConfigurationChanges = async () => {
         var data: ConfigData = new ConfigData(
             thresholdObservable.value,
             weakInfluenceDegreeObservable.value,
@@ -88,7 +88,7 @@ export default function render(): JSX.Element {
 
         await getDataServices();
 
-        _dataManager.setValue(configKey, data);
+        await _dataManager.setValue(configKey, data);
 
     };
 
@@ -184,7 +184,7 @@ export default function render(): JSX.Element {
 
                     <Button
                         text={"Save"}
-                        onClick={SaveThresholdChanges}/>
+                        onClick={SaveConfigurationChanges}/>
                 </div>
 
             </Card>

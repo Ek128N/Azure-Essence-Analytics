@@ -10,6 +10,7 @@ import { Header, TitleSize } from "azure-devops-ui/Header";
 import { IVssRestClientOptions } from "azure-devops-extension-api";
 import { RestTokenProvider } from "../modules/AuthTokenProvider";
 import { ProcessImport } from "../components/ProcessImport";
+import JsonInput from "../components/JsonInput/JsonInput";
 
 function AdminHub() {
   const [vssRestClientOptions, setVssRestClientOptions] = useState<IVssRestClientOptions>({});
@@ -43,6 +44,7 @@ function AdminHub() {
       <ProcessImport
         vssRestClientOptions={vssRestClientOptions}
       />
+        <JsonInput  vssRestClientOptions={vssRestClientOptions}/>
     </Page>
   );
 }

@@ -1,4 +1,4 @@
-export default class JsonInputTemplate {
+export default class MethodDefinition {
     public activities?: [Activity];
     public alphaContainments?: [AlphaContainment];
     public alphaCriterions?: [AlphaCriterion];

@@ -11,7 +11,11 @@ module.exports = {
     publicPath: "/dist/",
   },
   devServer: {
-    https: true,
+    https: {
+      key:'./cert/cert.key',
+      cert:'./cert/cert.crt',
+      ca: './cert/ca.crt',
+    },
     port: 3000,
   },
   plugins: [

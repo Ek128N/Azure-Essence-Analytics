@@ -15,8 +15,8 @@ import { useEffect, useState } from "react";
 import { Button } from "azure-devops-ui/Button";
 import { Header, TitleSize } from "azure-devops-ui/Header";
 import { CommonServiceIds, IProjectPageService, IVssRestClientOptions } from "azure-devops-extension-api";
-import { RestTokenProvider } from "../modules/AuthTokenProvider";
-import { AzureFetch } from "../modules/AzureFetch";
+import { RestTokenProvider } from "../common/azure/AuthTokenProvider";
+import { AzureFetch } from "../common/azure/AzureFetch";
 import MethodDefinition from "../modules/MethodDefinition";
 
 import { ProcessCheck } from "../components/ProcessCheck";

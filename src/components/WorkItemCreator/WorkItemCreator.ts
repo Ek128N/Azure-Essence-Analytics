@@ -9,7 +9,7 @@ import MethodDefinition, {
     State,
     WorkProduct, WorkProductCriterion, WorkProductManifest
 } from "../../modules/MethodDefinition";
-import {AzureFetch} from "../../modules/AzureFetch";
+import {AzureFetch} from "../../common/azure/AzureFetch";
 
 import {WorkItemRelation} from "azure-devops-extension-api/WorkItemTracking";
 import {getKeywordSearchResults} from "azure-devops-ui/Filter";

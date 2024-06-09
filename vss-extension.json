@@ -1,10 +1,10 @@
 {
   "manifestVersion": 1,
-  "version": "1.0.25",
+  "version": "1.0.42",
   "id": "azure-essence-analytics",
   "name": "Azure Essence Analytics",
   "description": "",
-  "publisher": "HITS",
+  "publisher": "Efyrion",
   "demands": ["api-version/3.0"],
   "categories": ["Azure Boards"],
   "public": false,

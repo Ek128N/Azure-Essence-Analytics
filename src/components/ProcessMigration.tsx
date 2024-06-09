@@ -2,7 +2,7 @@ import { IVssRestClientOptions } from "azure-devops-extension-api/Common/Context
 import { CoreRestClient } from "azure-devops-extension-api/Core/CoreClient";
 import { Button } from "azure-devops-ui/Button";
 import * as React from "react"
-import { AzureFetch } from "../modules/AzureFetch";
+import { AzureFetch } from "../common/azure/AzureFetch";
 import { ProcessType } from "azure-devops-extension-api/Core";
 
 interface IProps {

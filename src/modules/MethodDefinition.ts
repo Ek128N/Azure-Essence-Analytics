@@ -1,11 +1,15 @@
 
 export class  Method {
-    public methodName?:string;
+    public methodName:string;
+    public date:string;
+
     public methodDefinition?:MethodDefinition;
 
-    constructor(methodName?: string, methodDefinition?: MethodDefinition) {
+    constructor(methodName: string, date:string,  methodDefinition?: MethodDefinition) {
         this.methodName = methodName;
+        this.date=date;
         this.methodDefinition = methodDefinition;
+
     }
 }
 

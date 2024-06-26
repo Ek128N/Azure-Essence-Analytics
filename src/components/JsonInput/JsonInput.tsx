@@ -7,7 +7,7 @@ interface JsonInputProps {
     successMessage: string | null;
 }
 
-export default function JsonInput({ onFileChange, onFileUpload, successMessage }: JsonInputProps): JSX.Element {
+export default function JsonInput({ onFileChange, onFileUpload, successMessage }: JsonInputProps): React.ReactElement {
     return (
         <div>
             <input type="file" id="jsonInput" onChange={onFileChange} accept=".json" className={"margin-right-16"} />

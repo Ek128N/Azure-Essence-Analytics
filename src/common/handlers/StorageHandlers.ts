@@ -1,4 +1,4 @@
-import MethodDefinition, {Method} from "../../modules/MethodDefinition";
+import MethodDefinition, {Method} from "../../models/MethodDefinition";
 import {getDataServices} from "../azure/DataService";
 
 export async function readFileAsText(file: File): Promise<string> {

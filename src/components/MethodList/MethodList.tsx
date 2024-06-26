@@ -4,14 +4,14 @@ import { ITableColumn } from "azure-devops-ui/Table";
 import { ArrayItemProvider } from "azure-devops-ui/Utilities/Provider";
 import { Card } from "azure-devops-ui/Card";
 import { Button } from "azure-devops-ui/Button";
-import { Method } from "../../modules/MethodDefinition";
+import { Method } from "../../models/MethodDefinition";
 
 interface MethodListProps {
     methods: Method[];
     onDeleteMethod: (index: number) => Promise<void>;
 }
 
-export default function MethodList({ methods, onDeleteMethod }: MethodListProps): JSX.Element {
+export default function MethodList({ methods, onDeleteMethod }: MethodListProps): React.ReactElement {
     const columns: ITableColumn<Method>[] = [
         {
             id: "methodName",

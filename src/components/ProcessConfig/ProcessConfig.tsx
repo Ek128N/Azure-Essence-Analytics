@@ -1,4 +1,4 @@
-import {JSX, useEffect} from "react";
+import {useEffect} from "react";
 import {Button} from "azure-devops-ui/Button";
 import {ObservableValue} from "azure-devops-ui/Core/Observable";
 import {FormItem} from "azure-devops-ui/FormItem";
@@ -9,7 +9,7 @@ import * as SDK from "azure-devops-extension-sdk";
 import {CommonServiceIds, IExtensionDataService} from "azure-devops-extension-api";
 
 
-export default function render(): JSX.Element {
+export default function render(): React.ReactElement {
 
 
     const thresholdObservable: ObservableValue<string> = new ObservableValue<string>(" ");
@@ -183,7 +183,7 @@ export default function render(): JSX.Element {
 
 
                     <Button
-                        text={"Save"}
+                        text={"Calculate"}
                         onClick={SaveConfigurationChanges}/>
                 </div>
 

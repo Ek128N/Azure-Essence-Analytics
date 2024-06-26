@@ -9,7 +9,7 @@ debug.json
 .vs/
 src/Essence.zip
 
-#Ignore Vsix
+#Ignore Vsix & other dev files
 *.vsix
 vsixPackaged/
 
